@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IMPOSTOR — SANK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf7f3;
+  --bg2: #f3ede4;
+  --surface: #ffffff;
+  --surface2: #f7f2ec;
+  --border: rgba(160,100,60,0.12);
+  --border-mid: rgba(160,100,60,0.22);
+  --border-hi: rgba(160,100,60,0.4);
+  --text: #1a1208;
+  --text-mid: #7a5c3a;
+  --text-dim: #b89878;
+  --accent: #b8673a;
+  --accent-bg: rgba(184,103,58,0.08);
+  --accent-bg2: rgba(184,103,58,0.14);
+  --green: #4a8a5a;
+  --green-bg: rgba(74,138,90,0.1);
+  --red: #b84a38;
+  --red-bg: rgba(184,74,56,0.1);
+  --shadow: 0 2px 16px rgba(160,100,60,0.08);
+  --shadow-lg: 0 8px 32px rgba(160,100,60,0.12);
+  --r: 16px;
+  --r-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 20px 100px;
+  min-height: 100dvh;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 20px;
+}
+
+.logo-wrap { display: flex; flex-direction: column; gap: 2px; }
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: var(--text);
+}
+.logo-tagline {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+}
+
+.lang-toggle {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.lang-btn {
+  padding: 8px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lang-btn.active { background: var(--accent-bg2); color: var(--accent); }
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; animation: up 0.38s cubic-bezier(0.22,1,0.36,1); }
+@keyframes up { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── PAGE TITLE ── */
+.page-title { margin-bottom: 24px; }
+.page-eyebrow {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.page-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.05;
+}
+.page-h1 em { color: var(--accent); font-style: italic; }
+
+/* ── SECTION ── */
+.sec { margin-bottom: 20px; }
+.sec-head {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── BLOCK ── */
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.row:last-child { border-bottom: none; }
+
+.row-lbl { font-size: 14px; font-weight: 400; color: var(--text); }
+.row-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; font-weight: 300; }
+
+/* ── STEPPER ── */
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.step-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--accent-bg);
+  border: none;
+  color: var(--accent);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.step-btn:active { background: var(--accent-bg2); }
+.step-val {
+  width: 38px;
+  text-align: center;
+  font-size: 17px;
+  font-family: 'Playfair Display', serif;
+  color: var(--text);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  line-height: 36px;
+}
+
+/* ── SEGMENT ── */
+.seg {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+.seg-btn {
+  flex: 1;
+  padding: 11px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.seg-btn.active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── TOGGLE ── */
+.toggle { position: relative; width: 44px; height: 26px; cursor: pointer; flex-shrink: 0; }
+.toggle input { opacity:0; width:0; height:0; }
+.track {
+  position: absolute;
+  inset: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border-mid);
+  border-radius: 13px;
+  transition: 0.25s;
+}
+.track::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  top: 2px;
+  background: var(--text-dim);
+  border-radius: 50%;
+  transition: 0.25s;
+}
+.toggle input:checked + .track { background: var(--accent-bg2); border-color: var(--accent); }
+.toggle input:checked + .track::before { transform: translateX(18px); background: var(--accent); }
+
+/* ── NAMES ── */
+.names-list { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+.name-row { display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border); gap: 10px; }
+.name-row:last-child { border-bottom: none; }
+.name-idx { font-size: 13px; color: var(--text-dim); font-family: 'Playfair Display', serif; min-width: 16px; }
+.name-input { flex: 1; background: transparent; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; color: var(--text); padding: 15px 0; }
+.name-input::placeholder { color: var(--text-dim); }
+
+/* ── CATEGORY TRIGGER ROW ── */
+.cat-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 15px 16px;
+  box-shadow: var(--shadow); cursor: pointer; transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.cat-row:active { background: var(--bg2); }
+.cat-row-title { font-size: 14px; font-weight: 400; color: var(--text); }
+.cat-row-sub { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+.cat-row-right { display: flex; align-items: center; gap: 8px; }
+.cat-row-badge { background: var(--accent-bg2); color: var(--accent); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 500; }
+.cat-row-chevron { color: var(--text-dim); font-size: 16px; }
+
+/* ── BOTTOM SHEET ── */
+.backdrop { position: fixed; inset: 0; background: rgba(26,18,8,0.55); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.28s; }
+.backdrop.open { opacity: 1; pointer-events: all; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 430px; background: var(--bg); border-radius: 20px 20px 0 0; z-index: 201; max-height: 88dvh; display: flex; flex-direction: column; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-handle { width: 36px; height: 4px; background: var(--border-mid); border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.sheet-head-title { font-size: 15px; font-weight: 500; color: var(--text); }
+.sheet-done { background: var(--accent); color: #fff; border: none; border-radius: 20px; padding: 8px 20px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; letter-spacing: 0.5px; }
+.sheet-body { overflow-y: auto; padding: 14px 20px 40px; flex: 1; -webkit-overflow-scrolling: touch; }
+.sheet-all { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-sm); margin-bottom: 8px; cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.sheet-all.on { background: var(--accent-bg); border-color: var(--border-hi); }
+.sheet-all-lbl { font-size: 13px; font-weight: 500; color: var(--text); }
+.sheet-all-sub { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+.sheet-cats { display: flex; flex-direction: column; gap: 6px; }
+.sheet-cat { display: flex; align-items: center; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-sm); cursor: pointer; transition: all 0.15s; gap: 12px; -webkit-tap-highlight-color: transparent; }
+.sheet-cat.on { background: var(--accent-bg); border-color: var(--border-hi); }
+.sheet-cat-emoji { font-size: 20px; flex-shrink: 0; }
+.sheet-cat-info { flex: 1; }
+.sheet-cat-name { font-size: 13px; font-weight: 400; color: var(--text); }
+.sheet-cat-count { font-size: 11px; color: var(--text-dim); }
+.sheet-cat-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border-mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+.sheet-cat.on .sheet-cat-check { background: var(--accent); border-color: var(--accent); }
+.check-icon { width: 10px; height: 7px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); opacity: 0; }
+.sheet-cat.on .check-icon { opacity: 1; }
+
+/* ── BUTTONS ── */
+.btn {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: var(--r);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-bottom: 10px;
+}
+.btn-fill { background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(184,103,58,0.25); }
+.btn-fill:active { transform: scale(0.98); opacity: 0.9; }
+.btn-outline { background: transparent; color: var(--text-mid); border: 1px solid var(--border-mid); }
+.btn-outline:active { background: var(--bg2); }
+
+/* ── CARD FLIP ── */
+.card-scene { width: 100%; perspective: 900px; margin-bottom: 18px; }
+.card-3d {
+  width: 100%;
+  min-height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+.card-3d.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  min-height: 300px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--r);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.card-front {
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-lg);
+}
+
+/* subtle dot grid on front */
+.card-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r);
+  background-image: radial-gradient(circle, rgba(160,100,60,0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 11px 11px;
+}
+
+.front-player-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.front-player-sub {
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* ── QR MODE ── */
+.qr-intro {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.qr-intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.qr-intro-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.qr-player-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+.qr-player-info { flex: 1; }
+.qr-player-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.qr-player-status { font-size: 11px; color: var(--text-dim); }
+.qr-player-status.scanned { color: var(--green); }
+.qr-box { width: 70px; height: 70px; flex-shrink: 0; cursor: pointer; }
+.qr-box canvas, .qr-box svg { width: 70px !important; height: 70px !important; }
+
+/* QR modal */
+.qr-modal-back { position: fixed; inset: 0; background: rgba(26,18,8,0.7); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.qr-modal { background: var(--surface); border-radius: var(--r); padding: 28px 24px; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.qr-modal-name { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+.qr-modal-sub { font-size: 11px; color: var(--text-dim); letter-spacing: 1.5px; margin-bottom: 20px; text-transform: uppercase; }
+.qr-modal-img { margin: 0 auto 20px; width: 200px; height: 200px; }
+.qr-modal-hint { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+.qr-modal-close { margin-top: 18px; width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; }
+
+/* Vote mode toggle */
+.vote-mode-toggle {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.vmt-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.vmt-btn.active { background: var(--accent); color: #fff; font-weight: 500; }
+
+/* Secret vote player card */
+.player-vote-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.qr-player-info { flex: 1; min-width: 0; }
+.qr-player-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qr-player-status { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+.qr-player-status.scanned { color: var(--green); font-weight: 500; }
+.pvc-name { font-size: 14px; font-weight: 400; color: var(--text); }
+.pvc-voted { font-size: 11px; color: var(--green); margin-top: 2px; }
+.pvc-pending { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.pvc-qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.pvc-qr { width: 60px; height: 60px; cursor: pointer; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--border-mid); }
+.pvc-qr canvas, .pvc-qr img { width: 60px !important; height: 60px !important; }
+.qr-small-hint {
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--accent);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Phone vote screen (shown when QR opens) */
+.phone-vote { max-width: 430px; margin: 0 auto; padding: 24px 20px 60px; min-height: 100dvh; }
+.phone-vote-header { text-align: center; margin-bottom: 28px; padding-top: 20px; }
+.phone-vote-game { font-size: 10px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; }
+.phone-vote-title { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--text); }
+.phone-vote-title em { color: var(--accent); font-style: italic; }
+.phone-vote-sub { font-size: 13px; color: var(--text-dim); margin-top: 8px; }
+.vote-choice {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 18px 16px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.vote-choice:active { transform: scale(0.98); }
+.vote-choice.selected { background: var(--red-bg); border-color: rgba(184,74,56,0.4); color: var(--red); }
+.vote-choice-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border-mid); flex-shrink: 0; transition: all 0.18s; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.vote-choice.selected .vote-choice-check { background: var(--red); border-color: var(--red); color: #fff; }
+.vote-confirm-btn { width: 100%; padding: 17px; background: var(--accent); color: #fff; border: none; border-radius: var(--r); font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 16px; opacity: 0.4; transition: opacity 0.2s; }
+.vote-confirm-btn.ready { opacity: 1; }
+.vote-done-msg { text-align: center; padding: 40px 20px; }
+.vote-done-icon { font-size: 48px; margin-bottom: 16px; }
+.vote-done-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text); margin-bottom: 8px; }
+.vote-done-sub { font-size: 13px; color: var(--text-dim); }
+
+.card-back {
+  transform: rotateY(180deg);
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+/* ── REVEAL CONTENT ── */
+.rv-player-lbl { font-size: 10px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; }
+.rv-name { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--text); margin-bottom: 18px; }
+
+.role-tag {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.role-c { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74,138,90,0.3); }
+.role-i { background: var(--red-bg); color: var(--red); border: 1px solid rgba(184,74,56,0.3); }
+
+.word-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  color: var(--text);
+  line-height: 1.15;
+  margin: 4px 0 10px;
+}
+@keyframes wordIn { from { opacity:0; filter:blur(10px); transform:scale(0.94); } to { opacity:1; filter:blur(0); transform:scale(1); } }
+.word-in { animation: wordIn 0.55s cubic-bezier(0.22,1,0.36,1); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 6px; }
+.chip {
+  padding: 5px 12px;
+  background: var(--accent-bg);
+  border: 1px solid var(--border-mid);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--text-mid);
+}
+.chip b { color: var(--accent); font-weight: 500; }
+
+/* ── STEP DOTS ── */
+.dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 18px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-mid); transition: all 0.3s; }
+.dot.active { background: var(--accent); transform: scale(1.4); }
+.dot.done { background: rgba(184,103,58,0.3); }
+
+/* ── Q BOX ── */
+.q-box {
+  background: var(--accent-bg);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: left;
+  margin-top: 6px;
+  width: 100%;
+}
+.q-lbl { font-size: 8px; letter-spacing: 2.5px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; }
+.q-txt { font-family: 'Playfair Display', serif; font-style: italic; font-size: 16px; color: var(--text); line-height: 1.5; }
+
+/* ── HOW TO ── */
+.how-body { font-size: 14px; font-weight: 300; color: var(--text-mid); line-height: 1.9; padding: 18px 16px; }
+.how-body strong { color: var(--text); font-weight: 500; }
+
+/* ── VOTE ── */
+.vote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.vote-card {
+  padding: 18px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-mid);
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+}
+.vote-card:active { transform: scale(0.97); }
+.vote-card.voted { background: var(--red-bg); border-color: rgba(184,74,56,0.35); color: var(--red); font-weight: 500; }
+
+/* ── TIMER ── */
+.timer-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+.timer-svg { position: relative; width: 68px; height: 68px; }
+.timer-svg svg { transform: rotate(-90deg); }
+.timer-svg circle { transition: stroke-dashoffset 1s linear; }
+.timer-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); }
+.timer-lbl { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-top: 6px; }
+
+/* ── RESULT ── */
+.result-top { text-align: center; margin-bottom: 24px; }
+.result-icon { font-size: 42px; margin-bottom: 14px; }
+.result-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--text); margin-bottom: 6px; }
+.result-sub { font-size: 10px; letter-spacing: 2.5px; color: var(--text-dim); text-transform: uppercase; }
+
+.imp-row { margin: 20px 0; }
+.imp-row-lbl { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; }
+.imp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.imp-tag { padding: 7px 16px; background: var(--red-bg); border: 1px solid rgba(184,74,56,0.3); border-radius: 20px; font-size: 13px; color: var(--red); }
+
+.word-reveal-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; text-align: center; margin: 16px 0; box-shadow: var(--shadow); }
+.word-reveal-lbl { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; }
+.word-reveal-word { font-family: 'Playfair Display', serif; font-size: 32px; font-style: italic; color: var(--text); }
+
+/* ── BRAND FOOTER ── */
+.brand-footer {
+  background: linear-gradient(135deg, #2a1610, #1a0e08);
+  border-radius: var(--r);
+  padding: 22px;
+  margin: 20px 0 10px;
+  color: #e8d4b8;
+  position: relative;
+  overflow: hidden;
+}
+.brand-footer::after {
+  content: 'SANK';
+  position: absolute;
+  right: -8px;
+  bottom: -20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  color: rgba(232,212,184,0.05);
+  letter-spacing: 8px;
+  pointer-events: none;
+  line-height: 1;
+}
+.brand-name-row { font-family: 'Playfair Display', serif; font-size: 15px; letter-spacing: 3px; color: #e8d4b8; margin-bottom: 2px; }
+.brand-origins { font-size: 9px; letter-spacing: 2px; color: rgba(232,212,184,0.4); text-transform: uppercase; margin-bottom: 12px; }
+.brand-copy { font-size: 13px; font-weight: 300; color: rgba(232,212,184,0.7); line-height: 1.8; }
+.flavor-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.flavor-pill { padding: 4px 11px; border: 1px solid rgba(232,212,184,0.2); border-radius: 20px; font-size: 10px; color: rgba(232,212,184,0.5); }
+
+/* ── DIVIDER ── */
+.div { height: 1px; background: var(--border); margin: 6px 0; }
+
+/* ── TENSION SCREEN ── */
+.tension-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0e0906;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.tension-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.tension-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: rgba(184,103,58,0.6);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.6s 0.3s;
+}
+.tension-overlay.visible .tension-name { opacity: 1; transform: translateY(0); }
+.tension-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 80px;
+  color: #e8d4b8;
+  line-height: 1;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+.tension-verdict {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(232,212,184,0.4);
+  text-transform: uppercase;
+  min-height: 20px;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.tension-verdict.show { opacity: 1; }
+@keyframes tensionPulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.tension-pulsing { animation: tensionPulse 0.9s ease-in-out infinite; }
+@keyframes tensionReveal {
+  from { opacity:0; filter:blur(16px); transform:scale(0.88); }
+  to   { opacity:1; filter:blur(0);    transform:scale(1); }
+}
+.tension-revealed { animation: tensionReveal 0.7s cubic-bezier(0.22,1,0.36,1); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <div class="logo-wrap">
+      <div class="logo-name">SANK</div>
+      <div class="logo-tagline">some moments sink in forever</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </header>
+
+  <!-- ══════════════ SETUP ══════════════ -->
+  <div id="s-setup" class="screen active">
+    <div class="page-title">
+      <div class="page-eyebrow" id="ey-setup">card game</div>
+      <div class="page-h1"><em>Impostor</em></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head" id="sh-pi">Players & Impostors</div>
+      <div class="block">
+        <div class="row">
+          <div class="row-lbl" id="rl-p">Players</div>
+          <div class="stepper">
+            <button class="step-btn" onclick="adj('p',-1)">−</button>
+            <div class="step-val" id="vp">4</div>
+            <button class="step-btn" onclick="adj('p',1)">+</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-lbl" id="rl-i">Impostors</div>
+          <div class="stepper">
+            <button class="step-btn" onclick="adj('i',-1)">−</button>
+            <div class="step-val" id="vi">1</div>
+            <button class="step-btn" onclick="adj('i',1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head" id="sh-mode">Game mode</div>
+      <div class="seg">
+        <button class="seg-btn active" id="mw" onclick="setMode('w')">Word game</button>
+        <button class="seg-btn" id="mq" onclick="setMode('q')">Questions</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head" id="sh-cats">Categories</div>
+      <div class="cat-row" id="cat-row-btn" onclick="openSheet()">
+        <div>
+          <div class="cat-row-title" id="cat-row-title">Word categories</div>
+          <div class="cat-row-sub" id="cat-row-sub">All 50 categories active</div>
+        </div>
+        <div class="cat-row-right">
+          <div class="cat-row-badge" id="cat-badge">50</div>
+          <div class="cat-row-chevron">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head" id="sh-opts">Impostor options</div>
+      <div class="block">
+        <div class="row" onclick="toggleSwitch('tog-cat', event)">
+          <div><div class="row-lbl" id="ol-cat">Show category</div><div class="row-sub" id="os-cat">Impostor sees the theme, not the word</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-cat"><span class="track"></span></label>
+        </div>
+        <div class="row" onclick="toggleSwitch('tog-hint', event)">
+          <div><div class="row-lbl" id="ol-hint">Give a clue</div><div class="row-sub" id="os-hint">A vague hint to help blend in</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-hint"><span class="track"></span></label>
+        </div>
+        <div class="row" onclick="toggleSwitch('tog-know', event)">
+          <div><div class="row-lbl" id="ol-know">Impostors know each other</div><div class="row-sub" id="os-know">They are revealed to one another</div></div>
+          <label class="toggle"><input type="checkbox" id="tog-know"><span class="track"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-fill" id="btn-s1" onclick="goNames()">Set player names →</button>
+  </div>
+
+  <!-- ══════════════ NAMES ══════════════ -->
+  <div id="s-names" class="screen">
+    <div class="page-title">
+      <div class="page-eyebrow" id="ey-names">who's playing</div>
+      <div class="page-h1" id="h1-names">Player <em>names</em></div>
+    </div>
+    <div class="sec">
+      <div class="names-list" id="names-list"></div>
+    </div>
+    <button class="btn btn-fill" onclick="goOrder()" id="btn-n1">Continue →</button>
+    <button class="btn btn-outline" onclick="show('s-setup')" id="btn-n2">← Back</button>
+  </div>
+
+  <!-- ══════════════ ORDER ══════════════ -->
+  <div id="s-order" class="screen">
+    <div class="page-title">
+      <div class="page-eyebrow" id="ey-order">before you begin</div>
+      <div class="page-h1">How to <em>play</em></div>
+    </div>
+    <div class="block" style="margin-bottom:18px">
+      <div class="how-body" id="how-body"></div>
+    </div>
+    <button class="btn btn-fill" onclick="goCards()" id="btn-o1">Deal cards</button>
+    <button class="btn btn-outline" onclick="show('s-names')" id="btn-o2">← Back</button>
+  </div>
+
+  <!-- ══════════════ CARDS ══════════════ -->
+  <div id="s-cards" class="screen">
+    <div class="dots" id="dots"></div>
+    <div class="card-scene">
+      <div class="card-3d" id="card3d">
+        <div class="card-face card-front">
+          <div style="font-family:'Playfair Display',serif;font-size:14px;letter-spacing:6px;color:var(--text-mid);position:relative;margin-bottom:16px">SANK</div>
+          <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:4px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;position:relative" id="front-for-lbl">for</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--text);letter-spacing:1px;margin-bottom:20px;position:relative" id="front-player-name">—</div>
+          <div style="width:1px;height:36px;background:linear-gradient(to bottom,transparent,var(--border-hi),transparent);margin:0 auto 20px;position:relative"></div>
+          <div style="font-size:10px;letter-spacing:2.5px;color:var(--text-dim);text-transform:uppercase;position:relative" id="front-tap-txt">tap to reveal</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="rv-player-lbl" id="rv-lbl"></div>
+          <div class="rv-name" id="rv-name"></div>
+          <div id="rv-role"></div>
+          <div class="word-big" id="rv-word"></div>
+          <div id="rv-extra"></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-fill" id="btn-reveal" onclick="doReveal()"></button>
+    <button class="btn btn-fill" id="btn-nextp" onclick="nextP()" style="display:none"></button>
+    <button class="btn btn-fill" id="btn-tovote" onclick="goVote()" style="display:none"></button>
+  </div>
+
+  <!-- ══════════════ VOTE ══════════════ -->
+  <div id="s-vote" class="screen">
+    <div class="page-title">
+      <div class="page-eyebrow" id="ey-vote">round table</div>
+      <div class="page-h1"><em id="vote-h1">Vote</em></div>
+    </div>
+
+    <div class="vote-mode-toggle">
+      <button class="vmt-btn active" id="vmt-qr" onclick="setVoteMode('qr')">📱 Secret QR</button>
+      <button class="vmt-btn" id="vmt-classic" onclick="setVoteMode('classic')">🗳 Classic</button>
+    </div>
+
+    <!-- CLASSIC MODE -->
+    <div id="vote-classic-panel" style="display:none">
+      <div class="timer-wrap">
+        <div class="timer-svg">
+          <svg width="68" height="68" viewBox="0 0 68 68">
+            <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(184,103,58,0.12)" stroke-width="2.5"/>
+            <circle id="tc" cx="34" cy="34" r="28" fill="none" stroke="var(--accent)" stroke-width="2"
+              stroke-dasharray="175.9" stroke-dashoffset="0" stroke-linecap="round"/>
+          </svg>
+          <div class="timer-num" id="tnum">—</div>
+        </div>
+        <div class="timer-lbl" id="tlbl">discussion</div>
+      </div>
+      <div class="block" style="margin-bottom:18px">
+        <div class="how-body" id="vote-hint"></div>
+      </div>
+      <div class="sec-head" id="vote-sh">Cast your vote</div>
+      <div class="vote-grid" id="vote-grid"></div>
+      <button class="btn btn-fill" id="btn-vr" onclick="goResult()"></button>
+    </div>
+
+    <!-- QR SECRET MODE -->
+    <div id="vote-qr-panel">
+      <div class="qr-intro">
+        <div class="qr-intro-title" id="qr-title">Secret voting</div>
+        <div class="qr-intro-sub" id="qr-sub">Tap a QR code to open it, then scan and vote privately from your own phone.</div>
+      </div>
+      <div id="qr-players-list"></div>
+      <div style="margin-top:8px;margin-bottom:16px;text-align:center;font-size:11px;color:var(--text-dim)" id="qr-status-lbl">0 of 0 voted</div>
+      <button class="btn btn-fill" id="btn-vr-qr" onclick="goResult()" style="opacity:0.4;pointer-events:none"></button>
+    </div>
+  </div>
+
+  <!-- QR MODAL -->
+  <div class="qr-modal-back" id="qr-modal" style="display:none" onclick="closeQrModal(event)">
+    <div class="qr-modal">
+      <div class="qr-modal-name" id="qm-name"></div>
+      <div class="qr-modal-sub" id="qm-sub">scan to vote</div>
+      <div class="qr-modal-img" id="qm-img"></div>
+      <div class="qr-modal-hint" id="qm-hint">Open the camera app and scan. Your vote stays private.</div>
+      <button class="qr-modal-close" onclick="closeQrModal()">Done</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ RESULT ══════════════ -->
+  <div id="s-result" class="screen">
+    <div class="result-top">
+      <div class="result-icon" id="r-icon"></div>
+      <div class="result-title" id="r-title"></div>
+      <div class="result-sub" id="r-sub"></div>
+    </div>
+    <div class="imp-row">
+      <div class="imp-row-lbl" id="r-imp-lbl"></div>
+      <div class="imp-tags" id="r-imp-tags"></div>
+    </div>
+    <div class="word-reveal-block">
+      <div class="word-reveal-lbl" id="r-word-lbl"></div>
+      <div class="word-reveal-word" id="r-word"></div>
+    </div>
+    <div class="brand-footer">
+      <div class="brand-name-row">SANK · "All Of It"</div>
+      <div class="brand-origins">Brazil · Colombia · Guatemala · Ethiopia</div>
+      <div class="brand-copy" id="r-brand"></div>
+      <div class="flavor-row">
+        <div class="flavor-pill">Toffee</div>
+        <div class="flavor-pill">Dark Chocolate</div>
+        <div class="flavor-pill">Citrus</div>
+        <div class="flavor-pill">Medium Roast</div>
+      </div>
+    </div>
+    <button class="btn btn-fill" onclick="playAgain()" id="btn-again"></button>
+    <button class="btn btn-outline" onclick="show('s-setup')" id="btn-rhome"></button>
+  </div>
+<!-- ══ TENSION OVERLAY ══ -->
+<div class="tension-overlay" id="tension-overlay">
+  <div class="tension-name" id="tension-name"></div>
+  <div class="tension-big" id="tension-big">·</div>
+  <div class="tension-verdict" id="tension-verdict"></div>
+</div>
+
+</div>
+<div class="backdrop" id="backdrop" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <div class="sheet-head-title" id="sh-sheet-title">Categories</div>
+    <button class="sheet-done" onclick="closeSheet()" id="sh-done">Done</button>
+  </div>
+  <div class="sheet-body">
+    <div class="sheet-all" id="sheet-all" onclick="toggleAll()">
+      <div>
+        <div class="sheet-all-lbl" id="sh-all-lbl">All categories</div>
+        <div class="sheet-all-sub" id="sh-all-sub">Every word in the game</div>
+      </div>
+      <div class="sheet-cat-check" id="sh-all-check"><div class="check-icon"></div></div>
+    </div>
+    <div class="sheet-cats" id="sheet-cats"></div>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* ══════════ WORD DATABASE ══════════ */
+const DB = {
+  en: {
+    "🌍 Cities & Places":["Paris","Tokyo","New York","Rome","Sydney","Cairo","Rio de Janeiro","Barcelona","Dubai","London","Venice","Buenos Aires","Istanbul","Marrakech","Havana","Amsterdam","Prague","Seoul","Mexico City","Lagos","Nairobi","Mumbai","Lisbon","Athens","Vienna"],
+    "🗺️ Countries":["Brazil","Japan","India","Nigeria","France","Australia","Colombia","Egypt","Mexico","South Korea","Argentina","Morocco","Portugal","Sweden","Thailand","New Zealand","Ethiopia","Cuba","Peru","Greece","Iceland","Vietnam","Kenya","Ukraine","Chile"],
+    "🏙️ Landmarks":["Eiffel Tower","Great Wall","Colosseum","Statue of Liberty","Machu Picchu","Taj Mahal","Sagrada Familia","Big Ben","Acropolis","Pyramids of Giza","Christ the Redeemer","Stonehenge","Angkor Wat","Petra","Burj Khalifa","Chichen Itza","Alhambra","Forbidden City","Niagara Falls","Mount Fuji"],
+    "🐾 Animals":["Elephant","Penguin","Chameleon","Dolphin","Octopus","Flamingo","Sloth","Peacock","Narwhal","Platypus","Axolotl","Capybara","Quokka","Pangolin","Mantis Shrimp","Okapi","Tardigrade","Aye-aye","Kinkajou","Binturong","Blobfish","Goblin Shark","Saiga Antelope","Fossa","Tapir"],
+    "🌊 Ocean Life":["Great White Shark","Blue Whale","Manta Ray","Seahorse","Clownfish","Anglerfish","Jellyfish","Lobster","Sea Turtle","Barracuda","Cuttlefish","Moray Eel","Hammerhead","Stonefish","Flying Fish","Remora","Nautilus","Portuguese Man-o-War","Orca","Dugong"],
+    "🌱 Plants & Trees":["Baobab","Sequoia","Venus Flytrap","Corpse Flower","Cactus","Bamboo","Mangrove","Bonsai","Orchid","Pitcher Plant","Cherry Blossom","Sunflower","Kelp","Rafflesia","Titan Arum","Tumbleweed","Banyan","Lotus","Forget-Me-Not","Joshua Tree"],
+    "🍕 Food & Dishes":["Sushi","Tiramisu","Tacos","Croissant","Ramen","Hummus","Paella","Dim Sum","Baklava","Ceviche","Churros","Mochi","Falafel","Fondue","Bibimbap","Pho","Goulash","Shakshuka","Pierogi","Poutine","Rendang","Injera","Börek","Jollof Rice","Arepas"],
+    "🧃 Drinks & Cocktails":["Espresso","Matcha Latte","Mojito","Margarita","Sake","Kombucha","Chai","Smoothie","Cold Brew","Lassi","Horchata","Aperol Spritz","Negroni","Bubble Tea","Chimarrão","Kefir","Yerba Mate","Ginger Beer","Tequila Sunrise","Miso Soup"],
+    "🎬 Movies":["Inception","Titanic","The Dark Knight","Parasite","Interstellar","Avatar","Pulp Fiction","The Matrix","Spirited Away","Schindler's List","Forrest Gump","Get Out","La La Land","Her","Knives Out","Everything Everywhere","Dune","Moonlight","The Shining","Amélie"],
+    "📺 TV Shows":["Breaking Bad","Game of Thrones","Stranger Things","The Office","Friends","Squid Game","The Crown","Euphoria","Succession","Black Mirror","The Bear","Severance","Fleabag","Peaky Blinders","Narcos","Dark","Money Heist","Ted Lasso","Mindhunter","Chernobyl"],
+    "🎮 Video Games":["Minecraft","Fortnite","The Legend of Zelda","Super Mario","Grand Theft Auto","Elden Ring","Among Us","FIFA","Call of Duty","The Last of Us","Cyberpunk 2077","Pokémon","Red Dead Redemption","Stardew Valley","Hades","Hollow Knight","Celeste","Tetris","Doom","Disco Elysium"],
+    "🎲 Board Games":["Chess","Monopoly","Scrabble","Catan","Risk","Clue","Codenames","Ticket to Ride","Pandemic","Jenga","Battleship","Pictionary","Trivial Pursuit","Uno","Dixit","7 Wonders","Splendor","Azul","Coup","Secret Hitler"],
+    "🏆 Sports":["Soccer","Basketball","Tennis","Swimming","Gymnastics","Boxing","Formula 1","Surfing","Rock Climbing","Archery","Fencing","Polo","Curling","Parkour","Skydiving","Rugby","Cricket","Ice Hockey","Handball","Rowing"],
+    "🧘 Extreme Sports":["Base Jumping","Free Solo Climbing","Big Wave Surfing","Wingsuit Flying","Street Luge","Freediving","Kitesurfing","Bull Riding","Cliff Diving","Motocross","Bungee Jumping","Slacklining","Ski Cross","Biathlon","Obstacle Racing"],
+    "🎵 Music Genres":["Jazz","Reggaeton","Opera","Hip-Hop","Flamenco","Techno","Blues","K-Pop","Samba","Gospel","Bossa Nova","Heavy Metal","Country","Disco","Trap","Afrobeat","Cumbia","Grunge","Dubstep","Ambient"],
+    "🎤 Musical Instruments":["Piano","Violin","Guitar","Drums","Trumpet","Cello","Harp","Theremin","Sitar","Didgeridoo","Banjo","Accordion","Bagpipes","Marimba","Kora","Hurdy-Gurdy","Shamisen","Balalaika","Mbira","Kalimba"],
+    "💼 Jobs & Careers":["Astronaut","Chef","Architect","Doctor","Pilot","Journalist","Scientist","Barista","Lawyer","Artist","Detective","Engineer","Teacher","Diplomat","Magician","Sommelier","Forensic Anthropologist","Air Traffic Controller","Cryptographer","Marine Biologist"],
+    "🏥 Medical & Body":["Appendix","Kneecap","Amygdala","Adrenaline","Placebo","Vaccine","Dialysis","Biopsy","Neurotransmitter","Cortisol","Mitochondria","Lymph Node","Cochlea","Synapse","Retina","Insulin","Platelet","Collagen","Melatonin","Stem Cell"],
+    "🧠 Science & Tech":["Black Hole","DNA","Quantum Physics","Artificial Intelligence","Photosynthesis","Gravity","Cryptocurrency","VR Headset","Nuclear Fusion","CRISPR","Dark Matter","Blockchain","Neutrino","Wormhole","Singularity","Nanotechnology","Exoplanet","Antimatter","Superconductor","Fermentation"],
+    "💻 Internet & Social Media":["Algorithm","Meme","Viral","Hashtag","Influencer","Deepfake","Podcast","Streaming","NFT","Pixel","Firewall","Bug","Server","Cloud","Avatar","Clickbait","Bandwidth","Phishing","Username","Browser"],
+    "🎭 Emotions & Feelings":["Nostalgia","Euphoria","Melancholy","Anxiety","Serenity","Curiosity","Jealousy","Awe","Longing","Pride","Shame","Excitement","Boredom","Grief","Hope","Schadenfreude","Wanderlust","Saudade","Hiraeth","Hygge"],
+    "🧠 Psychological Concepts":["Gaslighting","Cognitive Dissonance","Imposter Syndrome","Stockholm Syndrome","Placebo Effect","Confirmation Bias","Dunning-Kruger","Projection","Catharsis","Attachment Style","Narcissism","Empathy","Trauma","Burnout","Flow State"],
+    "🌿 Nature & Landscapes":["Volcano","Glacier","Rainforest","Desert","Coral Reef","Waterfall","Aurora Borealis","Savanna","Fjord","Mangrove","Tundra","Geyser","Canyon","Monsoon","Permafrost","Sinkhole","Delta","Archipelago","Plateau","Estuary"],
+    "⛅ Weather & Climate":["Hurricane","Blizzard","Tornado","Drought","Monsoon","Heatwave","Fog","Thunder","Hail","Sandstorm","El Niño","Permafrost","Acid Rain","Smog","Rainbow","Aurora","Lightning","Tsunami","Avalanche","Wildfire"],
+    "🚀 Space & Astronomy":["Black Hole","Nebula","Supernova","Asteroid","Comet","Milky Way","Exoplanet","Dark Energy","Neutron Star","Pulsar","Solar Flare","Quasar","Wormhole","Event Horizon","Cosmic Radiation","Titan","Europa","Io","Ganymede","Ceres"],
+    "🏛️ History":["French Revolution","World War II","Moon Landing","Renaissance","Black Death","Roman Empire","Silk Road","Cold War","Industrial Revolution","Crusades","Trojan War","Magna Carta","Berlin Wall","Apartheid","Colonialism","Byzantine Empire","Mongol Empire","Arab Spring","Hiroshima","Underground Railroad"],
+    "📚 Literature & Books":["1984","Don Quixote","One Hundred Years of Solitude","The Odyssey","Hamlet","Pride and Prejudice","Crime and Punishment","The Great Gatsby","Moby Dick","The Stranger","Brave New World","Anna Karenina","Lolita","Ulysses","The Trial","In Search of Lost Time","Faust","The Iliad","Middlemarch","Beloved"],
+    "🎨 Art & Artists":["Mona Lisa","Starry Night","The Scream","Guernica","Girl with a Pearl Earring","Sistine Chapel","The Persistence of Memory","Water Lilies","The Birth of Venus","American Gothic","Campbell's Soup","Frida Kahlo","Banksy","Basquiat","Rothko","Warhol","Duchamp","Rembrandt","Caravaggio","Hirst"],
+    "🏗️ Architecture":["Sagrada Familia","Fallingwater","Guggenheim Bilbao","Pantheon","Hagia Sophia","Sydney Opera House","Bauhaus","Art Deco","Gothic Cathedral","Brutalism","Geodesic Dome","Zaha Hadid","Le Corbusier","Gaudi","Tadao Ando","Frank Lloyd Wright","Skyscraper","Pagoda","Ziggurat","Igloo"],
+    "👗 Fashion & Style":["Haute Couture","Streetwear","Vintage","Minimalism","Avant-garde","Capsule Wardrobe","Fast Fashion","Runway","Thrift","Tailored","Sustainable Fashion","Drop","Collaboration","Corset","Sneaker Culture","Normcore","Cottagecore","Y2K","Dark Academia","Quiet Luxury"],
+    "💄 Beauty & Wellness":["Botox","Retinol","SPF","Microblading","Glass Skin","Hyaluronic Acid","Contouring","Niacinamide","Gua Sha","Face Yoga","Cryotherapy","Infrared Sauna","Lymphatic Drainage","Sound Bath","Adaptogens","Collagen","Dermaplaning","Slugging","Double Cleanse","Beauty Sleep"],
+    "🏠 Places at Home":["Kitchen","Attic","Bathroom","Living Room","Garage","Basement","Balcony","Pantry","Walk-in Closet","Study","Mudroom","Sunroom","Wine Cellar","Home Office","Laundry Room","Nursery","Dining Room","Foyer","Utility Room","Pool"],
+    "🔧 Tools & Objects":["Compass","Scalpel","Abacus","Sextant","Microscope","Tuning Fork","Metronome","Spirit Level","Sundial","Periscope","Bellows","Lathe","Anvil","Soldering Iron","Stethoscope","Caliper","Theodolite","Hygrometer","Barometer","Loom"],
+    "🚗 Transportation":["Submarine","Hot Air Balloon","Gondola","Rickshaw","Monorail","Zeppelin","Hovercraft","Segway","Tuk-tuk","Cable Car","Bullet Train","Snowmobile","Helicopter","Catamaran","Doggled","Funicular","Maglev","Gyrocopter","Pedalo","Horse-drawn Carriage"],
+    "🎪 Entertainment & Events":["Carnival","Burning Man","Coachella","TED Talk","Flash Mob","Silent Disco","Escape Room","Open Mic","Street Performance","Masquerade","Improv Theater","Karaoke","Speed Dating","Trivia Night","Hackathon","Film Festival","Art Fair","Comedy Club","Auction","Fundraiser"],
+    "🍷 Food Culture":["Michelin Star","Farm-to-Table","Tasting Menu","Street Food","Pop-Up Restaurant","Food Truck","Charcuterie","Fermentation","Molecular Gastronomy","Umami","Fusion Cuisine","Food Pairing","Foraging","Slow Food","Zero Waste Cooking","Brunch","Tapas","Omakase","Mezze","Pit BBQ"],
+    "🧪 Materials & Substances":["Graphene","Aerogel","Obsidian","Mercury","Bismuth","Tungsten","Gallium","Mycelium","Cellulose","Latex","Kevlar","Carbon Fiber","Oobleck","Titanium","Cobalt","Beryllium","Antimony","Rhodium","Aerogel","Hydrogel"],
+    "🌐 Social & Political":["Democracy","Revolution","Protest","Populism","Propaganda","Censorship","Referendum","Diaspora","Gentrification","Civil Rights","Lobbying","Geopolitics","Sanctions","Asylum","Nationalism","Globalization","Colonialism","Feminism","Grassroots","Whistleblower"],
+    "💰 Money & Business":["Startup","Hedge Fund","IPO","Venture Capital","Bankruptcy","Stock Market","Inflation","Deficit","Monopoly","Cartel","Offshore Account","Dividend","Equity","Franchise","Crowdfunding","Bootstrapping","Unicorn Company","Burn Rate","Pivot","Disruption"],
+    "📖 Mythology & Folklore":["Minotaur","Medusa","Phoenix","Kraken","Banshee","Yeti","Siren","Chimera","Hydra","Valkyrie","Kitsune","Wendigo","Selkie","Baba Yaga","Shapeshifter","El Dorado","Leviathan","Djinn","Golem","Nymph"],
+    "🔮 Supernatural & Occult":["Telepathy","Astral Projection","Tarot","Séance","Poltergeist","Exorcism","Voodoo","Palmistry","Alchemy","Sigil","Ouija Board","Divination","Aura","Chakra","Manifestation","Ritual","Curse","Hex","Medium","Clairvoyance"],
+    "🧩 Abstract Concepts":["Infinity","Paradox","Entropy","Karma","Zeitgeist","Utopia","Dystopia","Nihilism","Epiphany","Serendipity","Deja Vu","Simulacrum","Liminal Space","The Sublime","Cognitive Load","Paradigm Shift","Occam's Razor","Heuristic","Zeitgeist","Archetype"],
+    "🏫 School & Education":["Valedictorian","Thesis","Plagiarism","Scholarship","Detention","Debate","Internship","Dropout","Tutor","Curriculum","Dissection","Field Trip","Locker","Cafeteria","Yearbook","Prom","Study Hall","Recess","Graduation","Class Clown"],
+    "👨‍👩‍👧 Relationships & Social":["Best Friend","Ghosting","Situationship","Boundaries","Toxic","Love Bombing","Breadcrumbing","Attachment","Long Distance","Blind Date","Soulmate","Frenemies","Rivalry","Mentorship","Parasocial","Networking","Catfishing","Gaslighting","Red Flag","Green Flag"],
+    "🌙 Dreams & Sleep":["Sleep Paralysis","Lucid Dream","Nightmare","Sleepwalking","Hypnagogic Hallucination","REM Sleep","Insomnia","Narcolepsy","Dream Journal","Recurring Dream","Night Terror","Power Nap","Sleep Debt","Circadian Rhythm","Melatonin","Hypnosis","Deja Vu","False Memory","Microsleep","Dreaming"],
+    "🎓 Philosophy":["Existentialism","Stoicism","Nihilism","Utilitarianism","Solipsism","Absurdism","Determinism","Free Will","The Trolley Problem","Plato's Cave","Tabula Rasa","Categorical Imperative","Dialectic","Phenomenology","Epistemology","Moral Relativism","Social Contract","Hedonism","Empiricism","Rationalism"],
+    "🌸 Celebrations & Traditions":["Carnival","Day of the Dead","Diwali","Ramadan","Mardi Gras","Cherry Blossom Festival","Oktoberfest","Holi","Lunar New Year","Burning Man","Eid al-Fitr","Songkran","Día de la Candelaria","Midsummer","La Tomatina","Running of the Bulls","Hanukkah","Nowruz","Kwanzaa","St. Patrick's Day"],
+    "🔬 Biology & Life":["Mitosis","CRISPR","Symbiosis","Parasite","Bioluminescence","Hibernation","Migration","Camouflage","Venom","Pheromone","Pollination","Metamorphosis","Endosymbiosis","Lateral Line","Electroreception","Apoptosis","Epigenetics","Horizontal Gene Transfer","Quorum Sensing","Mycorrhiza"],
+    "🏋️ Health & Fitness":["HIIT","Intermittent Fasting","Deadlift","Pilates","Marathon","Cold Plunge","Sauna","Vo2 Max","Muscle Memory","Proprioception","Active Recovery","Periodization","Superset","Zone 2 Cardio","Mobility","Breathwork","Macros","Deload Week","Lactate Threshold","Neuroplasticity"],
+    "☕ Coffee & SANK":["Espresso","Latte","Single Origin","Pour Over","Cold Brew","Chemex","Third Wave","Specialty Coffee","Bloom","Crema","Barista","Cupping","Toffee Notes","Brazilian Roast","All Of It","Aeropress","Ristretto","Flat White","Macchiato","Cortado"],
+  },
+  es: {
+    "🌍 Ciudades y lugares":["París","Tokio","Nueva York","Roma","Sídney","El Cairo","Río de Janeiro","Barcelona","Dubái","Londres","Venecia","Buenos Aires","Estambul","Marrakech","La Habana","Ámsterdam","Praga","Seúl","Ciudad de México","Lagos","Nairobi","Bombay","Lisboa","Atenas","Viena"],
+    "🗺️ Países":["Brasil","Japón","India","Nigeria","Francia","Australia","Colombia","Egipto","México","Corea del Sur","Argentina","Marruecos","Portugal","Suecia","Tailandia","Nueva Zelanda","Etiopía","Cuba","Perú","Grecia","Islandia","Vietnam","Kenia","Ucrania","Chile"],
+    "🏙️ Monumentos":["Torre Eiffel","Gran Muralla","Coliseo","Estatua de la Libertad","Machu Picchu","Taj Mahal","Sagrada Familia","Big Ben","Acrópolis","Pirámides de Guiza","Cristo Redentor","Stonehenge","Angkor Wat","Petra","Burj Khalifa","Chichén Itzá","Alhambra","Ciudad Prohibida","Cataratas del Niágara","Monte Fuji"],
+    "🐾 Animales":["Elefante","Pingüino","Camaleón","Delfín","Pulpo","Flamenco","Perezoso","Pavorreal","Narval","Ornitorrinco","Axolote","Capibara","Quokka","Pangolín","Camarón Mantis","Okapi","Tardígrado","Aye-aye","Kinkajú","Binturong","Pez globo","Tiburón duende","Antílope saiga","Fosa","Tapir"],
+    "🌊 Vida marina":["Tiburón blanco","Ballena azul","Manta raya","Caballito de mar","Pez payaso","Pez linterna","Medusa","Langosta","Tortuga marina","Barracuda","Sepia","Morena","Tiburón martillo","Pez piedra","Pez volador","Rémora","Nautilo","Fragata portuguesa","Orca","Dugong"],
+    "🌱 Plantas y árboles":["Baobab","Secuoya","Atrapamoscas","Flor cadáver","Cactus","Bambú","Mangle","Bonsái","Orquídea","Planta jarro","Flor de cerezo","Girasol","Kelp","Rafflesia","Titán arum","Rodadora","Baniano","Loto","Nomeolvides","Árbol de Josué"],
+    "🍕 Comida y platos":["Sushi","Tiramisú","Tacos","Croissant","Ramen","Hummus","Paella","Dim Sum","Baklava","Ceviche","Churros","Mochi","Falafel","Fondue","Bibimbap","Pho","Goulash","Shakshuka","Pierogi","Poutine","Rendang","Injera","Börek","Arroz Jollof","Arepas"],
+    "🧃 Bebidas y cócteles":["Espresso","Matcha Latte","Mojito","Margarita","Sake","Kombucha","Chai","Smoothie","Cold Brew","Lassi","Horchata","Aperol Spritz","Negroni","Bubble Tea","Chimarrão","Kéfir","Mate","Ginger Beer","Tequila Sunrise","Sopa de miso"],
+    "🎬 Películas":["Inception","Titanic","El Caballero Oscuro","Parásitos","Interestelar","Avatar","Pulp Fiction","The Matrix","El viaje de Chihiro","La lista de Schindler","Forrest Gump","Déjame salir","La La Land","Her","Knives Out","Todo en todas partes","Dune","Moonlight","El resplandor","Amélie"],
+    "📺 Series":["Breaking Bad","Game of Thrones","Stranger Things","The Office","Friends","El juego del calamar","The Crown","Euphoria","Succession","Black Mirror","The Bear","Severance","Fleabag","Peaky Blinders","Narcos","Dark","La casa de papel","Ted Lasso","Mindhunter","Chernobyl"],
+    "🎮 Videojuegos":["Minecraft","Fortnite","The Legend of Zelda","Super Mario","Grand Theft Auto","Elden Ring","Among Us","FIFA","Call of Duty","The Last of Us","Cyberpunk 2077","Pokémon","Red Dead Redemption","Stardew Valley","Hades","Hollow Knight","Celeste","Tetris","Doom","Disco Elysium"],
+    "🎲 Juegos de mesa":["Ajedrez","Monopolio","Scrabble","Catán","Risk","Cluedo","Codenames","Ticket to Ride","Pandemia","Jenga","Batalla Naval","Pictionary","Trivial Pursuit","Uno","Dixit","7 Maravillas","Splendor","Azul","Coup","Secreto Hitler"],
+    "🏆 Deportes":["Fútbol","Baloncesto","Tenis","Natación","Gimnasia","Boxeo","Fórmula 1","Surf","Escalada","Tiro con arco","Esgrima","Polo","Curling","Parkour","Paracaidismo","Rugby","Críquet","Hockey sobre hielo","Balonmano","Remo"],
+    "🧘 Deportes extremos":["Base Jump","Escalada en solitario","Surf de olas grandes","Traje de alas","Luge callejero","Apnea","Kitesurf","Rodeo","Salto de acantilado","Motocross","Puenting","Slackline","Ski cross","Biatlón","Carrera de obstáculos"],
+    "🎵 Géneros musicales":["Jazz","Reggaeton","Ópera","Hip-Hop","Flamenco","Tecno","Blues","K-Pop","Samba","Gospel","Bossa Nova","Heavy Metal","Cumbia","Disco","Trap","Afrobeat","Vallenato","Grunge","Dubstep","Ambient"],
+    "🎤 Instrumentos musicales":["Piano","Violín","Guitarra","Batería","Trompeta","Cello","Arpa","Theremin","Sitar","Didgeridoo","Banjo","Acordeón","Gaita","Marimba","Kora","Zanfona","Shamisen","Balalaika","Mbira","Kalimba"],
+    "💼 Trabajos y carreras":["Astronauta","Chef","Arquitecto","Médico","Piloto","Periodista","Científico","Barista","Abogado","Artista","Detective","Ingeniero","Maestro","Diplomático","Mago","Sommelier","Antropólogo forense","Controlador aéreo","Criptógrafo","Biólogo marino"],
+    "🏥 Medicina y cuerpo":["Apéndice","Rótula","Amígdala","Adrenalina","Placebo","Vacuna","Diálisis","Biopsia","Neurotransmisor","Cortisol","Mitocondria","Ganglio linfático","Cóclea","Sinapsis","Retina","Insulina","Plaqueta","Colágeno","Melatonina","Célula madre"],
+    "🧠 Ciencia y tecnología":["Agujero negro","ADN","Física cuántica","Inteligencia artificial","Fotosíntesis","Gravedad","Criptomoneda","Realidad virtual","Fusión nuclear","CRISPR","Materia oscura","Blockchain","Neutrino","Agujero de gusano","Singularidad","Nanotecnología","Exoplaneta","Antimateria","Superconductor","Fermentación"],
+    "💻 Internet y redes sociales":["Algoritmo","Meme","Viral","Hashtag","Influencer","Deepfake","Podcast","Streaming","NFT","Píxel","Firewall","Bug","Servidor","Nube","Avatar","Clickbait","Ancho de banda","Phishing","Nombre de usuario","Navegador"],
+    "🎭 Emociones y sentimientos":["Nostalgia","Euforia","Melancolía","Ansiedad","Serenidad","Curiosidad","Celos","Asombro","Añoranza","Orgullo","Vergüenza","Emoción","Aburrimiento","Duelo","Esperanza","Schadenfreude","Morriña","Saudade","Hiraeth","Hygge"],
+    "🧠 Conceptos psicológicos":["Gaslighting","Disonancia cognitiva","Síndrome del impostor","Síndrome de Estocolmo","Efecto placebo","Sesgo de confirmación","Efecto Dunning-Kruger","Proyección","Catarsis","Estilo de apego","Narcisismo","Empatía","Trauma","Burnout","Estado de flujo"],
+    "🌿 Naturaleza y paisajes":["Volcán","Glaciar","Selva","Desierto","Arrecife de coral","Cascada","Aurora boreal","Sabana","Fiordo","Manglar","Tundra","Géiser","Cañón","Monzón","Permafrost","Sumidero","Delta","Archipiélago","Meseta","Estuario"],
+    "⛅ Clima y fenómenos":["Huracán","Ventisca","Tornado","Sequía","Monzón","Ola de calor","Niebla","Trueno","Granizo","Tormenta de arena","El Niño","Permafrost","Lluvia ácida","Smog","Arcoíris","Aurora","Rayo","Tsunami","Avalancha","Incendio forestal"],
+    "🚀 Espacio y astronomía":["Agujero negro","Nebulosa","Supernova","Asteroide","Cometa","Vía Láctea","Exoplaneta","Energía oscura","Estrella de neutrones","Púlsar","Llamarada solar","Quásar","Agujero de gusano","Horizonte de sucesos","Radiación cósmica","Titán","Europa","Ío","Ganímedes","Ceres"],
+    "🏛️ Historia":["Revolución francesa","Segunda Guerra Mundial","Llegada a la Luna","Renacimiento","Peste Negra","Imperio romano","Ruta de la seda","Guerra Fría","Revolución industrial","Cruzadas","Guerra de Troya","Magna Carta","Muro de Berlín","Apartheid","Colonialismo","Imperio bizantino","Imperio mongol","Primavera árabe","Hiroshima","Ferrocarril clandestino"],
+    "📚 Literatura y libros":["1984","Don Quijote","Cien años de soledad","La Odisea","Hamlet","Orgullo y prejuicio","Crimen y castigo","El gran Gatsby","Moby Dick","El extranjero","Un mundo feliz","Ana Karenina","Lolita","Ulises","El proceso","En busca del tiempo perdido","Fausto","La Ilíada","Middlemarch","Beloved"],
+    "🎨 Arte y artistas":["La Mona Lisa","La noche estrellada","El grito","Guernica","La joven de la perla","Capilla Sixtina","La persistencia de la memoria","Nenúfares","El nacimiento de Venus","American Gothic","Sopa Campbell's","Frida Kahlo","Banksy","Basquiat","Rothko","Warhol","Duchamp","Rembrandt","Caravaggio","Hirst"],
+    "🏗️ Arquitectura":["Sagrada Familia","Fallingwater","Guggenheim Bilbao","Panteón","Hagia Sophia","Ópera de Sídney","Bauhaus","Art Deco","Catedral gótica","Brutalismo","Domo geodésico","Zaha Hadid","Le Corbusier","Gaudí","Tadao Ando","Frank Lloyd Wright","Rascacielos","Pagoda","Zigurat","Iglú"],
+    "👗 Moda y estilo":["Alta costura","Streetwear","Vintage","Minimalismo","Vanguardia","Armario cápsula","Moda rápida","Pasarela","Thrift","Confección","Moda sostenible","Drop","Colaboración","Corsé","Cultura del sneaker","Normcore","Cottagecore","Y2K","Dark Academia","Quiet Luxury"],
+    "💄 Belleza y bienestar":["Bótox","Retinol","FPS","Microblading","Glass Skin","Ácido hialurónico","Contorno","Niacinamida","Gua Sha","Yoga facial","Crioterapia","Sauna infrarroja","Drenaje linfático","Baño de sonido","Adaptógenos","Colágeno","Dermaplaning","Slugging","Doble limpieza","Beauty sleep"],
+    "🏠 Espacios del hogar":["Cocina","Ático","Baño","Sala de estar","Garaje","Sótano","Balcón","Despensa","Vestidor","Estudio","Cuarto de barro","Solario","Bodega","Oficina en casa","Cuarto de lavado","Cuarto de bebé","Comedor","Entrada","Cuarto de servicio","Piscina"],
+    "🔧 Herramientas y objetos":["Brújula","Bisturí","Ábaco","Sextante","Microscopio","Diapasón","Metrónomo","Nivel de burbuja","Reloj de sol","Periscopio","Fuelle","Torno","Yunque","Soldador","Estetoscopio","Calibrador","Teodolito","Higrómetro","Barómetro","Telar"],
+    "🚗 Transporte":["Submarino","Globo aerostático","Góndola","Rickshaw","Monorraíl","Zepelín","Aerodeslizador","Segway","Tuk-tuk","Teleférico","Tren bala","Moto de nieve","Helicóptero","Catamarán","Trineo de perros","Funicular","Maglev","Girocóptero","Pedalo","Carruaje"],
+    "🎪 Entretenimiento y eventos":["Carnaval","Burning Man","Coachella","TED Talk","Flash Mob","Disco silencioso","Escape Room","Open Mic","Espectáculo callejero","Mascarada","Teatro de improvisación","Karaoke","Speed Dating","Noche de trivia","Hackathon","Festival de cine","Feria de arte","Club de comedia","Subasta","Evento benéfico"],
+    "🍷 Cultura gastronómica":["Estrella Michelin","Del campo a la mesa","Menú degustación","Comida callejera","Restaurante pop-up","Food Truck","Charcutería","Fermentación","Gastronomía molecular","Umami","Cocina fusión","Maridaje","Forrajeo","Slow Food","Cocina de desperdicio cero","Brunch","Tapas","Omakase","Mezze","Barbacoa de pozo"],
+    "🧪 Materiales y sustancias":["Grafeno","Aerogel","Obsidiana","Mercurio","Bismuto","Tungsteno","Galio","Micelio","Celulosa","Látex","Kevlar","Fibra de carbono","Oobleck","Titanio","Cobalto","Berilio","Antimonio","Rodio","Aerogel","Hidrogel"],
+    "🌐 Social y político":["Democracia","Revolución","Protesta","Populismo","Propaganda","Censura","Referéndum","Diáspora","Gentrificación","Derechos civiles","Lobby","Geopolítica","Sanciones","Asilo","Nacionalismo","Globalización","Colonialismo","Feminismo","Movimiento de base","Denunciante"],
+    "💰 Dinero y negocios":["Startup","Fondo de cobertura","OPI","Capital de riesgo","Quiebra","Bolsa de valores","Inflación","Déficit","Monopolio","Cartel","Cuenta offshore","Dividendo","Capital propio","Franquicia","Crowdfunding","Bootstrapping","Empresa unicornio","Tasa de quema","Pivote","Disrupción"],
+    "📖 Mitología y folclore":["Minotauro","Medusa","Fénix","Kraken","Banshee","Yeti","Sirena","Quimera","Hidra","Valquiria","Kitsune","Wendigo","Selkie","Baba Yaga","Cambiaformas","El Dorado","Leviatán","Djinn","Gólem","Ninfa"],
+    "🔮 Sobrenatural y ocultismo":["Telepatía","Proyección astral","Tarot","Sesión espiritista","Poltergeist","Exorcismo","Vudú","Quiromancia","Alquimia","Sello mágico","Ouija","Adivinación","Aura","Chakra","Manifestación","Ritual","Maldición","Maleficio","Médium","Clarividencia"],
+    "🧩 Conceptos abstractos":["Infinito","Paradoja","Entropía","Karma","Zeitgeist","Utopía","Distopía","Nihilismo","Epifanía","Serendipia","Déjà Vu","Simulacro","Espacio liminal","Lo Sublime","Carga cognitiva","Cambio de paradigma","Navaja de Occam","Heurística","Arquetipo","Sincronía"],
+    "🏫 Escuela y educación":["Valedictorian","Tesis","Plagio","Beca","Detención","Debate","Pasantía","Deserción","Tutor","Currículo","Disección","Excursión","Casillero","Cafetería","Anuario","Prom","Sala de estudio","Recreo","Graduación","El payaso de la clase"],
+    "👨‍👩‍👧 Relaciones sociales":["Mejor amigo","Ghosting","Situationship","Límites","Tóxico","Love bombing","Breadcrumbing","Apego","Larga distancia","Cita a ciegas","Alma gemela","Enemigos íntimos","Rivalidad","Mentoría","Parasocial","Networking","Catfishing","Gaslighting","Bandera roja","Bandera verde"],
+    "🌙 Sueños y sueño":["Parálisis del sueño","Sueño lúcido","Pesadilla","Sonambulismo","Alucinación hipnagógica","Sueño REM","Insomnio","Narcolepsia","Diario de sueños","Sueño recurrente","Terror nocturno","Siesta reparadora","Deuda de sueño","Ritmo circadiano","Melatonina","Hipnosis","Déjà Vu","Falso recuerdo","Microsueño","Soñar"],
+    "🎓 Filosofía":["Existencialismo","Estoicismo","Nihilismo","Utilitarismo","Solipsismo","Absurdismo","Determinismo","Libre albedrío","El problema del tranvía","La caverna de Platón","Tabula Rasa","Imperativo categórico","Dialéctica","Fenomenología","Epistemología","Relativismo moral","Contrato social","Hedonismo","Empirismo","Racionalismo"],
+    "🌸 Celebraciones y tradiciones":["Carnaval","Día de los Muertos","Diwali","Ramadán","Mardi Gras","Festival de la flor de cerezo","Oktoberfest","Holi","Año Nuevo Lunar","Burning Man","Eid al-Fitr","Songkran","Candelaria","Midsommar","La Tomatina","Encierro de San Fermín","Janucá","Nowruz","Kwanzaa","Día de San Patricio"],
+    "🔬 Biología y vida":["Mitosis","CRISPR","Simbiosis","Parásito","Bioluminiscencia","Hibernación","Migración","Camuflaje","Veneno","Feromona","Polinización","Metamorfosis","Endosimbiosis","Línea lateral","Electrorrecepción","Apoptosis","Epigenética","Transferencia horizontal de genes","Quorum sensing","Micorriza"],
+    "🏋️ Salud y fitness":["HIIT","Ayuno intermitente","Peso muerto","Pilates","Maratón","Baño frío","Sauna","VO2 máx","Memoria muscular","Propiocepción","Recuperación activa","Periodización","Superserie","Cardio zona 2","Movilidad","Respiración consciente","Macros","Semana de descarga","Umbral de lactato","Neuroplasticidad"],
+    "☕ Café y SANK":["Espresso","Latte","Origen único","Pour Over","Cold Brew","Chemex","Tercera ola","Café de especialidad","Bloom","Crema","Barista","Catación","Notas de toffee","Tueste brasileño","All Of It","Aeropress","Ristretto","Flat White","Macchiato","Cortado"],
+  }
+};
+
+/* Flat hint map (word → hint) for impostor */
+const HINTS = {
+  "Paris":"City of light and love","Tokyo":"Neon, temples, and ramen","New York":"The city that never sleeps","Elephant":"Never forgets","Penguin":"Tuxedo bird from the south","Chameleon":"Master of disguise","Black Hole":"Not even light can escape","DNA":"Double helix blueprint of life","Quantum Physics":"Things exist in two places at once","Graffiti":"Art on walls, legal or not","Ballet":"Up on toes in a tutu","Volcano":"Mountain that can explode","Glacier":"Slow river of ancient ice","Jazz":"Made-up music on the spot","Reggaeton":"Dem bow rhythm from Puerto Rico","Astronaut":"Space traveler","Chef":"Commander of the kitchen","Nostalgia":"Longing for something that's gone","Euphoria":"Peak happiness you can't describe","Espresso":"Small, dark, and strong","Latte":"Mostly milk and a little coffee","Single Origin":"One country, one farm, one cup","Pour Over":"Patience and paper and hot water","Barista":"Coffee artist behind the bar","Toffee Notes":"Caramel sweetness in a sip","All Of It":"Four countries in one perfect cup","Inception":"A dream within a dream","Titanic":"Ship that hit an iceberg","Minecraft":"Build anything with blocks","Chess":"Ancient battle on a checkered board","Utopia":"A perfect world that doesn't exist","Paradox":"A true contradiction","Karma":"What goes around comes around","Minotaur":"Half man, half bull in a maze","Phoenix":"Bird that rises from its own ashes","Sushi":"Raw fish on seasoned rice","Ramen":"Japanese noodle soup","Tacos":"Mexican tortilla filled with anything","Carnival":"Party before Lent","Diwali":"Festival of lights","Holi":"Festival of colors","Bermuda Triangle":"Ships and planes disappear here","Aurora Borealis":"Green lights dancing in the arctic sky","Coral Reef":"Ocean's rainbow city","Bioluminescence":"Living things that glow in the dark","Hibernation":"Sleeping through winter","Metamorphosis":"Caterpillar becomes butterfly","Kombucha":"Fizzy fermented tea","Matcha Latte":"Green powder whipped into milk","Mojito":"Mint, lime, rum, and summer","Inflation":"Money buys less over time","Startup":"Small company trying to change the world","Existentialism":"You create your own meaning","Stoicism":"Control only what you can control","Lucid Dream":"You know you're dreaming and take control","Sleep Paralysis":"Can't move, might see a shadow","Ghosting":"Disappearing without explanation","Gaslighting":"Making someone doubt their own reality","Dungeons & Dragons":"Roll dice, be an elf, slay a dragon",
+};
+
+const HINTS_ES = {
+  "París":"Ciudad de la luz y el amor","Tokio":"Neón, templos y ramen","Nueva York":"La ciudad que nunca duerme","Elefante":"Nunca olvida","Pingüino":"Pájaro de esmoquin del sur","Camaleón":"Maestro del disfraz","Agujero negro":"Ni la luz puede escapar","ADN":"Doble hélice, manual de la vida","Física cuántica":"Las cosas están en dos lugares a la vez","Grafiti":"Arte en muros, legal o no","Ballet":"De puntillas con tutú","Volcán":"Montaña que puede explotar","Glaciar":"Río lento de hielo antiguo","Jazz":"Música inventada sobre la marcha","Reggaeton":"Ritmo dem bow desde Puerto Rico","Astronauta":"Viajero del espacio","Chef":"Comandante de la cocina","Nostalgia":"Querer algo que ya no existe","Euforia":"Felicidad máxima que no puedes explicar","Espresso":"Pequeño, oscuro e intenso","Latte":"Casi todo leche y un poco de café","Origen único":"Un país, una finca, una taza","Pour Over":"Paciencia, papel y agua caliente","Barista":"Artista del café detrás del bar","Notas de toffee":"Dulzura de caramelo en un sorbo","All Of It":"Cuatro países en una taza perfecta","Inception":"Un sueño dentro de otro sueño","Titanic":"Barco que chocó contra un iceberg","Minecraft":"Construye todo con bloques","Ajedrez":"Antigua batalla en tablero cuadriculado","Utopía":"Un mundo perfecto que no existe","Paradoja":"Una contradicción verdadera","Karma":"Lo que siembras cosechas","Minotauro":"Mitad hombre, mitad toro en un laberinto","Fénix":"Pájaro que renace de sus propias cenizas","Sushi":"Pescado crudo sobre arroz","Ramen":"Sopa de fideos japonesa","Tacos":"Tortilla mexicana rellena de lo que sea","Carnaval":"Fiesta antes de la Cuaresma","Diwali":"Festival de las luces","Holi":"Festival de los colores","Aurora boreal":"Luces verdes bailando en el cielo ártico","Arrecife de coral":"Ciudad arcoíris del océano","Bioluminiscencia":"Seres vivos que brillan en la oscuridad","Hibernación":"Dormir todo el invierno","Metamorfosis":"La oruga se convierte en mariposa","Kombucha":"Té fermentado con burbujas","Matcha Latte":"Polvo verde batido en leche","Mojito":"Menta, limón, ron y verano","Inflación":"El dinero compra menos con el tiempo","Startup":"Empresa pequeña que quiere cambiar el mundo","Existencialismo":"Tú creas tu propio sentido","Estoicismo":"Controla solo lo que puedes controlar","Sueño lúcido":"Sabes que estás soñando y tomas control","Parálisis del sueño":"No puedes moverte y ves sombras","Ghosting":"Desaparecer sin explicación","Gaslighting":"Hacerle dudar a alguien de su propia realidad",
+};
+
+/* ══════════ GENERIC HINTS ══════════ */
+// Rules to derive a generic hint based on category keywords. Each entry contains
+// a list of keywords (in English and Spanish) and the corresponding hints for
+// English and Spanish. If a category name contains any of the keywords, the hint
+// will be used when there is no custom hint defined for the specific word.
+const GENERIC_HINT_RULES = [
+  { keywords: ["food","comida","platos","dishes"], hintEn: "It's something you can eat — a dish or food.", hintEs: "Es algo que se come — un plato o comida." },
+  { keywords: ["drink","bebida","cocktail","cócteles","cocktails"], hintEn: "It's a drink or beverage.", hintEs: "Es una bebida." },
+  { keywords: ["cities","ciudades","places","lugares"], hintEn: "It's a well‑known location — maybe a city or a famous place.", hintEs: "Es un lugar conocido, tal vez una ciudad o un sitio famoso." },
+  { keywords: ["countries","países"], hintEn: "It's a country or nation.", hintEs: "Es un país." },
+  { keywords: ["landmark","monument","monumentos","landmarks","lugares emblemáticos"], hintEn: "It's an iconic landmark or structure.", hintEs: "Es un monumento emblemático o estructura." },
+  { keywords: ["animals","animales"], hintEn: "It's an animal.", hintEs: "Es un animal." },
+  { keywords: ["ocean","mar","life","vida marina"], hintEn: "It's a creature that lives in the ocean.", hintEs: "Es una criatura que vive en el océano." },
+  { keywords: ["plants","plantas","trees","árboles"], hintEn: "It's a plant or tree.", hintEs: "Es una planta o árbol." },
+  { keywords: ["extreme sports","deportes extremos"], hintEn: "It's an extreme sport.", hintEs: "Es un deporte extremo." },
+  { keywords: ["sports","deportes"], hintEn: "It's a sport.", hintEs: "Es un deporte." },
+  { keywords: ["music","música","genres","géneros"], hintEn: "It's a music genre.", hintEs: "Es un género musical." },
+  { keywords: ["instrument","instrumentos"], hintEn: "It's a musical instrument.", hintEs: "Es un instrumento musical." },
+  { keywords: ["jobs","carreras","profesiones","careers"], hintEn: "It's a profession or job.", hintEs: "Es una profesión u oficio." },
+  { keywords: ["medical","medicina","body","cuerpo"], hintEn: "It's related to the body or medicine.", hintEs: "Está relacionado con el cuerpo o la medicina." },
+  { keywords: ["science","ciencia","tech","tecnología"], hintEn: "It's a scientific or technological concept.", hintEs: "Es un concepto de ciencia o tecnología." },
+  { keywords: ["internet","redes","social","social media"], hintEn: "It's something from the internet or social media.", hintEs: "Está relacionado con internet o redes sociales." },
+  { keywords: ["emotions","emociones","feelings","sentimientos"], hintEn: "It's an emotion or feeling.", hintEs: "Es una emoción o sentimiento." },
+  { keywords: ["psychological","psicológicos"], hintEn: "It's a psychological concept.", hintEs: "Es un concepto psicológico." },
+  { keywords: ["nature","naturaleza","landscapes","paisajes"], hintEn: "It's a natural feature or landscape.", hintEs: "Es un elemento natural o paisaje." },
+  { keywords: ["weather","clima","climate"], hintEn: "It's a type of weather or climate phenomenon.", hintEs: "Es un tipo de clima o fenómeno meteorológico." },
+  { keywords: ["space","espacio","astronomy","astronomía"], hintEn: "It's something from space or astronomy.", hintEs: "Es algo del espacio o la astronomía." },
+  { keywords: ["history","historia"], hintEn: "It's a historical event, person, or period.", hintEs: "Es un evento, personaje o periodo histórico." },
+  { keywords: ["literature","literatura","books","libros"], hintEn: "It's a literary work or book.", hintEs: "Es una obra literaria." },
+  { keywords: ["art","arte","artists","artistas"], hintEn: "It's a work of art or an artist.", hintEs: "Es una obra de arte o un artista." },
+  { keywords: ["architecture","arquitectura"], hintEn: "It's related to architecture.", hintEs: "Está relacionado con la arquitectura." },
+  { keywords: ["fashion","moda","style","estilo"], hintEn: "It's a fashion style or trend.", hintEs: "Es un estilo o tendencia de moda." },
+  { keywords: ["beauty","belleza","wellness","bienestar"], hintEn: "It's about beauty or wellness.", hintEs: "Tiene que ver con belleza o bienestar." },
+  { keywords: ["home","hogar","house","casa","places at home","espacios del hogar"], hintEn: "It's a room or place within a home.", hintEs: "Es un lugar o estancia en la casa." },
+  { keywords: ["tools","herramientas","objects","objetos"], hintEn: "It's a tool or everyday object.", hintEs: "Es una herramienta u objeto cotidiano." },
+  { keywords: ["transport","transporte"], hintEn: "It's a mode of transportation.", hintEs: "Es un medio de transporte." },
+  { keywords: ["entertainment","entretenimiento","events","eventos"], hintEn: "It's an entertainment event or activity.", hintEs: "Es un evento o actividad de entretenimiento." },
+  { keywords: ["food culture","cultura gastronómica"], hintEn: "It's related to food culture.", hintEs: "Está relacionado con la cultura gastronómica." },
+  { keywords: ["materials","materiales","substances","sustancias"], hintEn: "It's a material or substance.", hintEs: "Es un material o sustancia." },
+  { keywords: ["social","política","politico","politics"], hintEn: "It's a social or political concept.", hintEs: "Es un concepto social o político." },
+  { keywords: ["money","dinero","negocios","business"], hintEn: "It's related to money or business.", hintEs: "Está relacionado con dinero o negocios." },
+  { keywords: ["mythology","mitología","folklore","folclore"], hintEn: "It's from mythology or folklore.", hintEs: "Es de la mitología o el folclore." },
+  { keywords: ["supernatural","sobrenatural","occult","ocultismo"], hintEn: "It's supernatural or occult.", hintEs: "Es sobrenatural u ocultista." },
+  { keywords: ["abstract","abstractos","concepts","conceptos"], hintEn: "It's an abstract concept.", hintEs: "Es un concepto abstracto." },
+  { keywords: ["school","escuela","education","educación"], hintEn: "It's related to school or education.", hintEs: "Está relacionado con la escuela o la educación." },
+  { keywords: ["relationship","relaciones","sociales"], hintEn: "It's a type of relationship or social situation.", hintEs: "Es un tipo de relación o situación social." },
+  { keywords: ["dreams","sueños","sleep","dormir"], hintEn: "It's related to dreams or sleep.", hintEs: "Está relacionado con los sueños o el sueño." },
+  { keywords: ["philosophy","filosofía"], hintEn: "It's a philosophical concept.", hintEs: "Es un concepto filosófico." },
+  { keywords: ["celebrations","celebraciones","traditions","tradiciones"], hintEn: "It's a celebration or tradition.", hintEs: "Es una celebración o tradición." },
+  { keywords: ["biology","biología","life","vida"], hintEn: "It's a biological concept or something alive.", hintEs: "Es un concepto biológico o algo vivo." },
+  { keywords: ["health","salud","fitness","ejercicio"], hintEn: "It's related to health or fitness.", hintEs: "Está relacionado con la salud o el fitness." },
+  { keywords: ["coffee","café","sank"], hintEn: "It's part of coffee culture — think of brewing methods, drinks, or terms.", hintEs: "Tiene que ver con la cultura del café — piensa en métodos, bebidas o términos." },
+];
+
+// Derive a generic hint based on the category. This function tries to match keywords
+// defined above. If a match is found, it returns the hint in the current language.
+function deriveGenericHint(cat) {
+  // Remove the leading emoji(s) and any spaces at the start to focus on the category name
+  const idx = cat.indexOf(" ");
+  const c = (idx >= 0 ? cat.slice(idx + 1) : cat).toLowerCase();
+  for(const rule of GENERIC_HINT_RULES) {
+    for(const kw of rule.keywords) {
+      if(c.includes(kw.toLowerCase())) {
+        return lang === "en" ? rule.hintEn : rule.hintEs;
+      }
+    }
+  }
+  // If no rule matched, fall back to a simple message referencing the category
+  return lang === "en"
+    ? `Think about its category: ${cat}`
+    : `Piensa en su categoría: ${cat}`;
+}
+
+const QUESTIONS_EN = [
+  "If this word were a sound, what would it be?",
+  "Describe this word using only sensations — no nouns.",
+  "If this word were a time of day, which one and why?",
+  "What texture does this word have? Describe it without naming it.",
+  "If this word had a temperature, how would it feel?",
+  "Describe this word as if you've never heard it but can feel it.",
+  "If this word were weather, what kind of day would it be?",
+  "What would this word smell like, without naming it?",
+  "If this word were a color, which one and why?",
+  "What emotion does this word give you, without explaining?",
+];
+
+const QUESTIONS_ES = [
+  "¿Si esta palabra fuera un sonido, cuál sería?",
+  "Describe esta palabra usando solo sensaciones — sin sustantivos.",
+  "¿Si esta palabra fuera una hora del día, cuál y por qué?",
+  "¿Qué textura tiene esta palabra? Descríbela sin nombrarla.",
+  "¿Si esta palabra tuviera temperatura, cómo se sentiría?",
+  "Describe esta palabra como si nunca la hubieras escuchado pero pudieras sentirla.",
+  "¿Si esta palabra fuera un tipo de clima, qué día sería?",
+  "¿A qué olería esta palabra, sin nombrarla?",
+  "¿Si esta palabra fuera un color, cuál y por qué?",
+  "¿Qué emoción te da esta palabra, sin explicar?",
+];
+
+/* ══════════ I18N ══════════ */
+const I18N = {
+  en:{
+    "ey-setup":"card game","sh-pi":"Players & Impostors","rl-p":"Players","rl-i":"Impostors",
+    "sh-mode":"Game mode","mw":"Word game","mq":"Questions",
+    "sh-cats":"Categories","all-lbl":"All categories","all-sub":"Every word in the game",
+    "sh-opts":"Impostor options","ol-cat":"Show category","os-cat":"Impostor sees the theme, not the word",
+    "ol-hint":"Give a clue","os-hint":"A vague hint to help blend in",
+    "ol-know":"Impostors know each other","os-know":"They are revealed to one another",
+    "btn-s1":"Set player names →",
+    "ey-names":"who's playing","btn-n1":"Continue →","btn-n2":"← Back",
+    "ey-order":"before you begin","btn-o1":"Deal cards","btn-o2":"← Back",
+    "front-tap-txt":"tap to reveal",
+    "ey-vote":"round table","tlbl":"discussion","vote-sh":"Cast your vote",
+    "vote-hint-txt":"Everyone gives one clue about the word — specific enough to prove you know it, but not so obvious the impostor can copy you. Then vote.",
+    "btn-vr":"Reveal impostors","btn-again":"Play again","btn-rhome":"← Setup",
+    "badge-c":"Citizen","badge-i":"Impostor",
+    "cat-lbl":"Category","hint-lbl":"Clue","allies-lbl":"Your allies","q-sub":"Answer this, not the word",
+    "r-caught":"The impostor was caught.","r-free":"The impostor escaped.",
+    "r-sub-c":"Citizens win this round.","r-sub-i":"Impostors win this round.",
+    "r-word-lbl":"The word was",
+    "r-brand":"This round, the table played over All Of It — four countries, one cup. Whoever was blending in now knows what real harmony tastes like.",
+    imp_lbl:n=>`Impostor${n>1?"s":""}`,
+    order_fn:(p,im,m,names)=>{
+      const c=p-im;
+      // Describe how many impostors and what they receive based on the mode (word or question)
+      const mn=m==="w"
+        ? `<strong>${im} impostor${im>1?"s":""}</strong> get${im>1?"":"s"} a blank card — no word, just a role.`
+        : `<strong>${im} impostor${im>1?"s":""}</strong> get${im>1?"":"s"} a question instead.`;
+      // Explain the gameplay without naming a specific starting player to avoid confusion. The players are shuffled
+      // before dealing, so the order is already random.
+      return `<strong>${c} citizen${c>1?"s":""}</strong> share the same secret word. ${mn}<br><br>Pass the phone — each player sees their card privately. Choose a random player to start, then each person gives one clue about the word without saying it.<br><br>The group then votes out who they think is the impostor. The impostor wins by surviving — or by correctly guessing the word if voted out.`;
+    },
+    h1_names:"Player <em>names</em>",ph:i=>`Player ${i+1}`,rv_lbl:n=>`${n}'s card`,
+    cat_count:n=>`${n} words`,
+  },
+  es:{
+    "ey-setup":"juego de cartas","sh-pi":"Jugadores e Impostores","rl-p":"Jugadores","rl-i":"Impostores",
+    "sh-mode":"Modo de juego","mw":"Palabras","mq":"Preguntas",
+    "sh-cats":"Categorías","all-lbl":"Todas las categorías","all-sub":"Todas las palabras del juego",
+    "sh-opts":"Opciones del impostor","ol-cat":"Mostrar categoría","os-cat":"El impostor ve el tema, no la palabra",
+    "ol-hint":"Dar una pista","os-hint":"Una pista vaga para pasar desapercibido",
+    "ol-know":"Los impostores se conocen","os-know":"Son revelados mutuamente",
+    "btn-s1":"Poner nombres →",
+    "ey-names":"quiénes juegan","btn-n1":"Continuar →","btn-n2":"← Volver",
+    "ey-order":"antes de empezar","btn-o1":"Repartir cartas","btn-o2":"← Volver",
+    "front-tap-txt":"toca para revelar",
+    "ey-vote":"mesa redonda","tlbl":"discusión","vote-sh":"Vota al impostor",
+    "vote-hint-txt":"Cada jugador da una pista sobre la palabra — específica para demostrar que la conoces, pero no tan obvia que el impostor pueda copiarte. Luego vota.",
+    "btn-vr":"Revelar impostores","btn-again":"Jugar de nuevo","btn-rhome":"← Inicio",
+    "badge-c":"Ciudadano","badge-i":"Impostor",
+    "cat-lbl":"Categoría","hint-lbl":"Pista","allies-lbl":"Tus aliados","q-sub":"Responde esto, no la palabra",
+    "r-caught":"El impostor fue atrapado.","r-free":"El impostor escapó.",
+    "r-sub-c":"Los ciudadanos ganan.","r-sub-i":"Los impostores ganan.",
+    "r-word-lbl":"La palabra era",
+    "r-brand":"En esta ronda, la mesa jugó con All Of It — cuatro países, una taza. Quien estaba fingiendo ahora sabe a qué sabe la verdadera armonía.",
+    imp_lbl:n=>`Impostor${n>1?"es":""}`,
+    order_fn:(p,im,m,names)=>{
+      const c=p-im;
+      // Build the impostor description depending on the mode (word or question)
+      const mn=m==="w"
+        ? `<strong>${im} impostor${im>1?"es":""}</strong> recibe${im>1?"n":""} una carta en blanco — sin palabra, solo un rol.`
+        : `<strong>${im} impostor${im>1?"es":""}</strong> recibe${im>1?"n":""} una pregunta.`;
+      // Explain the gameplay for Spanish without referencing a specific starting player. The order is randomized
+      // when the game is set up.
+      return `<strong>${c} ciudadano${c>1?"s":""}</strong> comparten la misma palabra secreta. ${mn}<br><br>Pasa el teléfono — cada jugador ve su carta en privado. Elijan un jugador al azar para comenzar, luego cada uno da una pista sin decir la palabra.<br><br>El grupo vota para eliminar al impostor. El impostor gana si sobrevive — o si adivina la palabra al ser eliminado.`;
+    },
+    h1_names:"Nombres de <em>jugadores</em>",ph:i=>`Jugador ${i+1}`,rv_lbl:n=>`Carta de ${n}`,
+    cat_count:n=>`${n} palabras`,
+  }
+};
+
+/* ══════════ STATE ══════════ */
+let lang="en", numP=4, numI=1, mode="w";
+let selCats = new Set(Object.keys(DB.en));
+let names = [];
+let G = {};
+
+const t = k => I18N[lang][k];
+const tf = (k,...a) => I18N[lang][k](...a);
+const db = () => DB[lang];
+const qs = () => lang==="en" ? QUESTIONS_EN : QUESTIONS_ES;
+const hints = () => lang==="en" ? HINTS : HINTS_ES;
+
+/* ══════════ LANG ══════════ */
+function setLang(l) {
+  lang = l;
+  const oldKeys = Object.keys(DB[l==="en"?"es":"en"]);
+  const newKeys = Object.keys(DB[l]);
+  const wasAll = selCats.size === oldKeys.length;
+  selCats = wasAll ? new Set(newKeys) : new Set(newKeys.filter((_,i)=>i<selCats.size));
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.textContent===l.toUpperCase()));
+  updateCatRow();
+  updateUI();
+}
+
+function updateUI() {
+  const ids = ["ey-setup","sh-pi","rl-p","rl-i","sh-mode","sh-cats","all-lbl","all-sub",
+    "sh-opts","ol-cat","os-cat","ol-hint","os-hint","ol-know","os-know","btn-s1",
+    "ey-names","btn-n1","btn-n2","ey-order","btn-o1","btn-o2","front-tap-txt",
+    "ey-vote","tlbl","vote-sh","btn-vr","btn-again","btn-rhome"];
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t(id)});
+  document.getElementById("mw").textContent=t("mw");
+  document.getElementById("mq").textContent=t("mq");
+
+  // Update the secret vote instructions when the language changes.  This text isn't part
+  // of the standard i18n map because it includes a dynamic instruction about tapping the
+  // QR.  Encourage players to tap to enlarge the QR before scanning.
+  const qrSubEl = document.getElementById("qr-sub");
+  if (qrSubEl) {
+    qrSubEl.textContent = lang === "en"
+      ? "Tap a QR code to enlarge it, then scan and vote privately from your own phone."
+      : "Toca un QR para agrandarlo, luego escanéalo y vota en privado desde tu propio celular.";
+  }
+
+  // If we are in secret QR mode, update the small hint under each mini QR to
+  // reflect the current language.  This ensures switching languages after
+  // building the QR panel still updates these hints.
+  const smallHintText = lang === "en" ? "tap to scan" : "toca para escanear";
+  document.querySelectorAll('.qr-small-hint').forEach(el => {
+    el.textContent = smallHintText;
+  });
+}
+
+/* ══════════ STEPPERS ══════════ */
+function adj(f,d) {
+  if(f==="p"){numP=Math.max(3,Math.min(12,numP+d));if(numI>=numP)numI=numP-1;document.getElementById("vp").textContent=numP;document.getElementById("vi").textContent=numI}
+  else{numI=Math.max(1,Math.min(Math.floor(numP/2),numI+d));document.getElementById("vi").textContent=numI}
+}
+function setMode(m){mode=m;document.getElementById("mw").classList.toggle("active",m==="w");document.getElementById("mq").classList.toggle("active",m==="q")}
+
+/*
+ * Toggle helper for option rows. When the user clicks anywhere on the row (except the
+ * actual checkbox/slider), flip the state of the associated checkbox. Prevent
+ * clicks on the checkbox itself from toggling twice by checking the event target.
+ */
+function toggleSwitch(id, evt) {
+  // If the click originated on the actual checkbox or its track, let the default
+  // behaviour handle the toggle. Otherwise, flip the checkbox manually.
+  const target = evt?.target;
+  if(target && (target.tagName === 'INPUT' || target.classList.contains('track'))) {
+    return;
+  }
+  const cb = document.getElementById(id);
+  if(cb) {
+    cb.checked = !cb.checked;
+  }
+}
+
+/* ══════════ CATEGORIES ══════════ */
+function openSheet() {
+  renderSheet();
+  document.getElementById("backdrop").classList.add("open");
+  document.getElementById("sheet").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSheet() {
+  document.getElementById("backdrop").classList.remove("open");
+  document.getElementById("sheet").classList.remove("open");
+  document.body.style.overflow = "";
+  updateCatRow();
+}
+
+function updateCatRow() {
+  const total = Object.keys(db()).length;
+  const active = selCats.size;
+  const isAll = active === total;
+  const sub = isAll
+    ? (lang==="en" ? `All ${total} categories active` : `Las ${total} categorías activas`)
+    : (lang==="en" ? `${active} of ${total} categories` : `${active} de ${total} categorías`);
+  document.getElementById("cat-row-sub").textContent = sub;
+  document.getElementById("cat-badge").textContent = active;
+}
+
+function renderSheet() {
+  const keys = Object.keys(db());
+  const allOn = selCats.size === keys.length;
+  const shAll = document.getElementById("sheet-all");
+  shAll.classList.toggle("on", allOn);
+  const shAllCheck = document.getElementById("sh-all-check");
+  shAllCheck.style.background = allOn ? "var(--accent)" : "";
+  shAllCheck.style.borderColor = allOn ? "var(--accent)" : "";
+  const icon = shAllCheck.querySelector(".check-icon");
+  if(icon) icon.style.opacity = allOn ? "1" : "0";
+
+  document.getElementById("sheet-cats").innerHTML = keys.map(k => {
+    const on = selCats.has(k);
+    const count = db()[k].length;
+    const parts = k.split(" ");
+    const emoji = parts[0];
+    const name = parts.slice(1).join(" ");
+    return `<div class="sheet-cat${on?" on":""}" onclick="toggleCat(${JSON.stringify(k)})">
+      <div class="sheet-cat-emoji">${emoji}</div>
+      <div class="sheet-cat-info">
+        <div class="sheet-cat-name">${name}</div>
+        <div class="sheet-cat-count">${count} ${lang==="en"?"words":"palabras"}</div>
+      </div>
+      <div class="sheet-cat-check"><div class="check-icon" style="opacity:${on?1:0}"></div></div>
+    </div>`;
+  }).join("");
+}
+
+function toggleCat(k) {
+  if(selCats.has(k)) { if(selCats.size > 1) selCats.delete(k); }
+  else selCats.add(k);
+  renderSheet();
+  updateCatRow();
+}
+
+function toggleAll() {
+  const keys = Object.keys(db());
+  if(selCats.size === keys.length) selCats = new Set([keys[0]]);
+  else selCats = new Set(keys);
+  renderSheet();
+  updateCatRow();
+}
+
+/* ══════════ NAMES ══════════ */
+function goNames() {
+  try {
+    const el = document.getElementById("h1-names");
+    if(el) el.innerHTML = lang==="en" ? "Player <em>names</em>" : "Nombres de <em>jugadores</em>";
+  } catch(e){}
+  const list = document.getElementById("names-list");
+  if(!list) return;
+  list.innerHTML = Array.from({length:numP},(_,i)=>{
+    const ph = lang==="en" ? `Player ${i+1}` : `Jugador ${i+1}`;
+    return `<div class="name-row"><div class="name-idx">${i+1}</div><input class="name-input" id="ni${i}" type="text" placeholder="${ph}" maxlength="18" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false"></div>`;
+  }).join("");
+  show("s-names");
+}
+
+/* ══════════ GAME START ══════════ */
+function shuffle(a){return a.sort(()=>Math.random()-.5)}
+
+function goOrder() {
+  names = Array.from({length:numP},(_,i)=>{
+    const v=document.getElementById(`ni${i}`).value.trim();
+    return v||tf("ph",i);
+  });
+  // Pick word from selected categories
+  const pool = [...selCats].flatMap(k=>db()[k]?db()[k].map(w=>({w,cat:k})):[]);
+  const picked = pool[Math.floor(Math.random()*pool.length)];
+  const q = qs()[Math.floor(Math.random()*qs().length)];
+  const sc = document.getElementById("tog-cat").checked;
+  const sh = document.getElementById("tog-hint").checked;
+  const sk = document.getElementById("tog-know").checked;
+  const pl = [...names]; shuffle(pl);
+  const imp = new Set(pl.slice(0,numI));
+  G = {word:picked, question:q, showCat:sc, showHint:sh, knowEach:sk, players:pl, impostors:imp, idx:0, voted:null, mode};
+  document.getElementById("how-body").innerHTML = tf("order_fn",numP,numI,mode,pl);
+  show("s-order");
+}
+
+/* ══════════ CARDS ══════════ */
+function goCards(){G.idx=0;renderCard();show("s-cards")}
+
+function renderCard(){
+  const{players,idx}=G,total=players.length;
+  document.getElementById("dots").innerHTML=Array.from({length:total},(_,i)=>
+    `<div class="dot${i===idx?" active":i<idx?" done":""}"></div>`).join("");
+  document.getElementById("card3d").classList.remove("flipped");
+  // Show player name on the FRONT of the card
+  const nameEl = document.getElementById("front-player-name");
+  if(nameEl) nameEl.textContent = players[idx];
+  const forEl = document.getElementById("front-for-lbl");
+  if(forEl) forEl.textContent = lang==="en"?"for":"para";
+  document.getElementById("front-tap-txt").textContent = lang==="en"?"tap to reveal":"toca para revelar";
+  document.getElementById("rv-lbl").textContent="";
+  document.getElementById("rv-name").textContent="";
+  document.getElementById("rv-role").innerHTML="";
+  document.getElementById("rv-word").textContent="";
+  document.getElementById("rv-extra").innerHTML="";
+  // Hide the explicit "Reveal" button in favour of tapping the card itself
+  const revealBtn = document.getElementById("btn-reveal");
+  if(revealBtn){
+    revealBtn.style.display = "none";
+  }
+  // Make the front of the card clickable to trigger reveal.  We only allow the click
+  // if the card hasn't been flipped yet.
+  const card = document.getElementById("card3d");
+  if(card){
+    card.onclick = () => {
+      // If not yet flipped, perform reveal
+      if(!card.classList.contains("flipped")) doReveal();
+    };
+  }
+  document.getElementById("btn-nextp").style.display="none";
+  document.getElementById("btn-tovote").style.display="none";
+}
+
+function doReveal(){
+  const{players,idx,impostors:imp,word:wO,showCat,showHint,knowEach,mode:m,question:q}=G;
+  const name=players[idx], isImp=imp.has(name);
+  document.getElementById("rv-lbl").textContent=tf("rv_lbl",name);
+  document.getElementById("rv-name").textContent="";
+  let role,wTxt,extra="";
+  if(isImp){
+    role=`<div class="role-tag role-i">${t("badge-i")}</div>`;
+    wTxt = m==="q"?"?":"—";
+    if(m==="q") extra=`<div class="q-box"><div class="q-lbl">${t("q-sub")}</div><div class="q-txt">${q}</div></div>`;
+    if(showCat) extra+=`<div class="chips"><span class="chip"><b>${t("cat-lbl")}:</b> ${wO.cat}</span></div>`;
+    if(showHint){
+      // Try to obtain a predefined hint. If none exists for this word,
+      // fall back to a generic hint based on the word's category. This
+      // ensures the impostor always gets some clue when the hint option is enabled.
+      let h = hints()[wO.w] || "";
+      if(!h){
+        // If no custom hint exists for this word, derive a generic hint based on the category.
+        h = deriveGenericHint(wO.cat);
+      }
+      extra+=`<div class="chips"><span class="chip"><b>${t("hint-lbl")}: </b> ${h}</span></div>`;
+    }
+    if(knowEach&&imp.size>1){const oth=[...imp].filter(n=>n!==name).join(", ");extra+=`<div class="chips"><span class="chip"><b>${t("allies-lbl")}:</b> ${oth}</span></div>`}
+  } else {
+    role=`<div class="role-tag role-c">${t("badge-c")}</div>`;
+    wTxt=wO.w;
+    extra=`<div class="chips"><span class="chip"><b>${t("cat-lbl")}:</b> ${wO.cat}</span></div>`;
+  }
+  document.getElementById("rv-role").innerHTML=role;
+  const wd=document.getElementById("rv-word");
+  wd.textContent=wTxt; wd.className="word-big"; void wd.offsetWidth; wd.classList.add("word-in");
+  document.getElementById("rv-extra").innerHTML=extra;
+  setTimeout(()=>document.getElementById("card3d").classList.add("flipped"),50);
+  document.getElementById("btn-reveal").style.display="none";
+  if(idx<players.length-1){
+    document.getElementById("btn-nextp").style.display="block";
+    document.getElementById("btn-nextp").textContent=lang==="en"?"Next player →":"Siguiente →";
+  } else {
+    document.getElementById("btn-tovote").style.display="block";
+    document.getElementById("btn-tovote").textContent=lang==="en"?"Start discussion →":"Iniciar discusión →";
+  }
+}
+
+function nextP(){
+  document.getElementById("card3d").classList.remove("flipped");
+  setTimeout(()=>{G.idx++;renderCard()},400);
+}
+
+/* ══════════ VOTE ══════════ */
+let tInt=null, voteMode="classic", secretVotes={}, voteSessionId="", _voteChannel=null;
+const TC=175.9, tcirc=document.getElementById("tc");
+
+function setVoteMode(m) {
+  voteMode = m;
+  document.getElementById("vmt-qr").classList.toggle("active", m==="qr");
+  document.getElementById("vmt-classic").classList.toggle("active", m==="classic");
+  document.getElementById("vote-classic-panel").style.display = m==="classic" ? "" : "none";
+  document.getElementById("vote-qr-panel").style.display = m==="qr" ? "" : "none";
+  if(m==="qr") {
+    buildQrPanel();
+    pollSecretVotes();
+    const qrSubEl = document.getElementById("qr-sub");
+    if(qrSubEl){
+      qrSubEl.textContent = lang === "en"
+        ? "Tap a QR code to enlarge it, then scan and vote privately from your own phone."
+        : "Toca un QR para agrandarlo, luego escanéalo y vota en privado desde tu propio celular.";
+    }
+  }
+}
+
+function startTimer(){
+  if(tInt)clearInterval(tInt);
+  let s=120; tcirc.style.stroke="var(--accent)"; tcirc.style.strokeDashoffset=0;
+  function tick(){
+    tcirc.style.strokeDashoffset=TC*(1-s/120);
+    document.getElementById("tnum").textContent=s>0?s:"✓";
+    if(s===0){clearInterval(tInt);tcirc.style.stroke="var(--green)"}
+    if(s===10)tcirc.style.stroke="var(--red)";
+    s--;
+  }
+  tick(); tInt=setInterval(tick,1000);
+}
+
+function goVote(){
+  if(tInt)clearInterval(tInt);
+  voteMode="classic"; secretVotes={};
+  voteSessionId="sank_"+Date.now()+"_"+Math.random().toString(36).slice(2,7);
+  document.getElementById("tnum").textContent=120;
+  tcirc.style.strokeDashoffset=0; tcirc.style.stroke="var(--accent)";
+  document.getElementById("vote-hint").textContent = lang==="en"
+    ?"Everyone gives one clue about the word — specific enough to prove you know it, but not so obvious the impostor can copy you. Then vote."
+    :"Cada jugador da una pista — específica para demostrar que conoces la palabra, pero no tan obvia que el impostor pueda copiarte. Luego vota.";
+  document.getElementById("vote-sh").textContent = lang==="en"?"Cast your vote":"Vota al impostor";
+  document.getElementById("btn-vr").textContent = lang==="en"?"Reveal impostors":"Revelar impostores";
+  document.getElementById("btn-vr-qr").textContent = lang==="en"?"Reveal impostors":"Revelar impostores";
+  document.getElementById("vote-h1").textContent = lang==="en"?"Vote":"Vota";
+  document.getElementById("qr-title").textContent = lang==="en"?"Secret voting":"Votación secreta";
+  document.getElementById("qr-sub").textContent = lang==="en"
+    ? "Tap a QR code to enlarge it, then scan and vote privately from your own phone."
+    : "Toca un QR para agrandarlo, luego escanéalo y vota en privado desde tu propio celular.";
+  document.getElementById("vmt-classic").textContent="🗳 "+(lang==="en"?"Classic":"Clásico");
+  document.getElementById("vmt-qr").textContent="📱 "+(lang==="en"?"Secret QR":"QR Secreto");
+  document.getElementById("vote-grid").innerHTML=G.players.map(p=>
+    `<div class="vote-card" onclick="castVote('${p.replace(/'/g,"\\'")}',this)">${p}</div>`).join("");
+  document.getElementById("vote-classic-panel").style.display="none";
+  document.getElementById("vote-qr-panel").style.display="";
+  document.getElementById("vmt-qr").classList.add("active");
+  document.getElementById("vmt-classic").classList.remove("active");
+  voteMode="qr";
+  show("s-vote");
+  buildQrPanel();
+  pollSecretVotes();
+  setTimeout(startTimer,600);
+}
+
+function castVote(n,el){
+  G.voted=n;
+  document.querySelectorAll(".vote-card").forEach(e=>e.classList.remove("voted"));
+  el.classList.add("voted");
+}
+
+/* ══ QR VOTING — REAL API ══ */
+function buildQrPanel(){
+  const list=document.getElementById("qr-players-list");
+  list.innerHTML=G.players.map((p,i)=>{
+    const voted=secretVotes[p];
+    const hintText = lang === "en" ? "tap to scan" : "toca para escanear";
+    return `<div class="player-vote-card" id="pvc-${i}">
+      <div class="qr-player-info">
+        <div class="qr-player-name">${p}</div>
+        <div class="qr-player-status${voted?" scanned":""}" id="pvs-${i}">${voted?(lang==="en"?"✓ Voted":"✓ Votó"):(lang==="en"?"Waiting…":"Esperando…")}</div>
+      </div>
+      <div class="pvc-qr-wrap">
+        <div class="pvc-qr" id="pvcqr-${i}" onclick="showQrModal(${i})"></div>
+        <div class="qr-small-hint">${hintText}</div>
+      </div>
+    </div>`;
+  }).join("");
+  G.players.forEach((p,i)=>{
+    const el=document.getElementById(`pvcqr-${i}`);
+    if(!el) return;
+    el.innerHTML="";
+    try{ new QRCode(el,{text:buildVoteUrl(p),width:60,height:60,colorDark:"#1a1208",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M}); }
+    catch(e){ el.innerHTML=`<div style="font-size:9px;color:var(--text-dim);text-align:center;padding:4px">QR<br>${p[0]}</div>`; }
+  });
+  updateQrStatus();
+}
+
+function buildVoteUrl(playerName){
+  const base=window.location.href.split("?")[0];
+  return `${base}?vote=1&session=${encodeURIComponent(voteSessionId)}&voter=${encodeURIComponent(playerName)}&players=${encodeURIComponent(JSON.stringify(G.players))}&lang=${lang}`;
+}
+
+function showQrModal(idx){
+  const p=G.players[idx];
+  document.getElementById("qm-name").textContent=p;
+  document.getElementById("qm-sub").textContent=lang==="en"?"scan to vote in secret":"escanea para votar en secreto";
+  document.getElementById("qm-hint").textContent=lang==="en"
+    ?"Open your camera app, scan the code, and vote from your phone. No one else sees your choice."
+    :"Abre la cámara, escanea el código y vota desde tu celular. Nadie más ve tu elección.";
+  const img=document.getElementById("qm-img");
+  img.innerHTML="";
+  try{ new QRCode(img,{text:buildVoteUrl(p),width:200,height:200,colorDark:"#1a1208",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M}); }
+  catch(e){}
+  document.getElementById("qr-modal").style.display="flex";
+}
+
+function closeQrModal(e){
+  if(!e||e.target===document.getElementById("qr-modal")||e.currentTarget===document.getElementById("qr-modal"))
+    document.getElementById("qr-modal").style.display="none";
+}
+
+function updateQrStatus(){
+  const total=G.players.length, voted=Object.keys(secretVotes).length;
+  const statusEl = document.getElementById("qr-status-lbl");
+  if(statusEl){
+    statusEl.textContent = lang === "en"
+      ? `${voted} of ${total} voted`
+      : `${voted} de ${total} votaron`;
+  }
+  const btn=document.getElementById("btn-vr-qr");
+  btn.style.opacity=voted===total?"1":"0.4";
+  btn.style.pointerEvents=voted===total?"auto":"none";
+  G.players.forEach((p,i)=>{
+    const s=document.getElementById(`pvs-${i}`);
+    if(s&&secretVotes[p]){s.textContent=lang==="en"?"✓ Voted":"✓ Votó";s.className="qr-player-status scanned";}
+  });
+}
+
+/* ── Polling: ask the server for votes, fast at first then slows down ── */
+let _pollTimer = null;
+let _pollCount = 0;
+async function pollSecretVotes(){
+  if(voteMode!=="qr") return;
+  try {
+    const res = await fetch(`/api/votes?session=${encodeURIComponent(voteSessionId)}&t=${Date.now()}`);
+    if(res.ok){
+      const data = await res.json();
+      if(data.votes){
+        const before = Object.keys(secretVotes).length;
+        Object.assign(secretVotes, data.votes);
+        if(Object.keys(secretVotes).length !== before) updateQrStatus();
+      }
+    }
+  } catch(e){ /* network hiccup — ignore */ }
+  _pollCount++;
+  // First 30 polls (15s): every 500ms — feels instant
+  // After that: every 1.5s to save requests
+  const delay = _pollCount < 30 ? 500 : 1500;
+  _pollTimer = setTimeout(pollSecretVotes, delay);
+}
+
+function stopPolling(){
+  if(_pollTimer){ clearTimeout(_pollTimer); _pollTimer=null; }
+  _pollCount=0;
+}
+
+/* ══ PHONE VOTE PAGE (when QR is scanned) ══ */
+function checkIfVotePage(){
+  const params=new URLSearchParams(window.location.search);
+  if(!params.get("vote")) return;
+  const voter=decodeURIComponent(params.get("voter")||"");
+  const session=decodeURIComponent(params.get("session")||"");
+  const players=JSON.parse(decodeURIComponent(params.get("players")||"[]"));
+  const vl=params.get("lang")||"en";
+  const storageKey=`sank_vr_${session}_${voter}`;
+  const en=vl==="en";
+
+  // Clear page
+  document.body.innerHTML="";
+  document.head.innerHTML=`<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}body{font-family:'Inter',sans-serif;background:#faf7f3;color:#1a1208;-webkit-font-smoothing:antialiased}.vc{background:#fff;border:1px solid rgba(160,100,60,.12);border-radius:12px;padding:18px 16px;margin-bottom:8px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .18s;box-shadow:0 2px 12px rgba(160,100,60,.07)}.vc:active{transform:scale(.98)}.vc.sel{background:rgba(184,74,56,.08);border-color:rgba(184,74,56,.4);color:#b84a38}.vch{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(160,100,60,.25);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .18s;color:transparent}.vc.sel .vch{background:#b84a38;border-color:#b84a38;color:#fff}</style>`;
+
+  let chosen=null;
+  const choices=players.filter(p=>p!==voter);
+  document.body.innerHTML=`<div style="max-width:430px;margin:0 auto;padding:32px 20px 80px"><div style="text-align:center;margin-bottom:28px"><div style="font-size:9px;letter-spacing:3px;color:#b89878;text-transform:uppercase;margin-bottom:8px">SANK · Impostor</div><div style="font-family:'Playfair Display',serif;font-size:38px;color:#1a1208"><em>${en?"Vote":"Vota"}</em></div><div style="font-size:13px;color:#7a5c3a;margin-top:10px;line-height:1.6">${en?`Voting as <strong>${voter}</strong>`:`Votando como <strong>${voter}</strong>`}<br>${en?"Who is the impostor?":"¿Quién es el impostor?"}</div></div>${choices.map(p=>`<div class="vc" id="vc_${p.replace(/[^a-z0-9]/gi,'_')}" onclick="pk('${p.replace(/'/g,"\\'")}')"><span>${p}</span><div class="vch">✓</div></div>`).join("")}<button id="cb" onclick="cv()" style="width:100%;padding:17px;background:#b8673a;color:#fff;border:none;border-radius:14px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:16px;opacity:.35;transition:opacity .2s">${en?"Confirm vote":"Confirmar voto"}</button></div>`;
+
+  window.pk=function(name){
+    chosen=name;
+    document.querySelectorAll(".vc").forEach(e=>e.classList.remove("sel"));
+    document.getElementById("vc_"+name.replace(/[^a-z0-9]/gi,"_"))?.classList.add("sel");
+    document.getElementById("cb").style.opacity="1";
+  };
+  window.cv=async function(){
+    if(!chosen) return;
+    const btn = document.getElementById("cb");
+    btn.disabled = true;
+    btn.style.opacity = "0.6";
+    btn.textContent = en ? "Sending…" : "Enviando…";
+    try {
+      const res = await fetch("/api/vote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session, voter, choice: chosen }),
+      });
+      if(!res.ok) throw new Error("server error");
+    } catch(e) {
+      btn.disabled = false;
+      btn.style.opacity = "1";
+      btn.textContent = en ? "Try again" : "Reintentar";
+      return;
+    }
+    document.body.innerHTML=`<div style="max-width:430px;margin:0 auto;padding:80px 20px;text-align:center"><div style="font-size:52px;margin-bottom:16px">☕</div><div style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:10px">${en?"Vote submitted!":"¡Voto enviado!"}</div><div style="font-size:13px;color:#b89878;line-height:1.7">${en?"Your vote has been recorded. Hand the phone back to the host.":"Tu voto fue registrado. Devuelve el teléfono al anfitrión."}</div></div>`;
+  };
+}
+
+/* ══════════ TENSION SEQUENCE ══════════ */
+function goResult(){
+  if(tInt)clearInterval(tInt);
+  // Tally QR votes
+  if(voteMode==="qr" && Object.keys(secretVotes).length>0){
+    const tally={};
+    Object.values(secretVotes).forEach(v=>{tally[v]=(tally[v]||0)+1;});
+    G.voted=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+  }
+  if(_voteChannel){ try{_voteChannel.close();}catch(e){} _voteChannel=null; }
+  stopPolling();
+  const{impostors:imp,voted,word:wO}=G;
+  const caught = voted && imp.has(voted);
+
+  // Start tension screen
+  const overlay = document.getElementById("tension-overlay");
+  const bigEl = document.getElementById("tension-big");
+  const nameEl = document.getElementById("tension-name");
+  const verdictEl = document.getElementById("tension-verdict");
+
+  const accusedName = voted || (lang==="en"?"No one":"Nadie");
+  nameEl.textContent = lang==="en" ? "The vote is in" : "Los votos están";
+  bigEl.textContent = "·";
+  bigEl.className = "tension-big";
+  verdictEl.textContent = "";
+  verdictEl.className = "tension-verdict";
+
+  overlay.classList.add("visible");
+
+  // Step 1: show accused name after 0.8s with pulse
+  setTimeout(()=>{
+    bigEl.textContent = accusedName;
+    bigEl.className = "tension-big tension-pulsing tension-revealed";
+  }, 800);
+
+  // Step 2: hold tension 2.2s then show IMPOSTOR or NOT
+  setTimeout(()=>{
+    bigEl.className = "tension-big";
+    const isImp = imp.has(voted);
+    if(isImp){
+      verdictEl.textContent = lang==="en"?"— IMPOSTOR —":"— IMPOSTOR —";
+      verdictEl.style.color = "rgba(184,74,56,0.85)";
+    } else {
+      verdictEl.textContent = lang==="en"?"— INNOCENT —":"— INOCENTE —";
+      verdictEl.style.color = "rgba(74,138,90,0.85)";
+    }
+    verdictEl.className = "tension-verdict show";
+  }, 3200);
+
+  // Step 3: go to result after 5s
+  setTimeout(()=>{
+    overlay.classList.remove("visible");
+    showResult(caught, imp, voted, wO);
+  }, 5000);
+}
+
+function showResult(caught, imp, voted, wO){
+  document.getElementById("r-icon").textContent=caught?"☕":"🫧";
+  document.getElementById("r-title").textContent=caught?(lang==="en"?"The impostor was caught.":"El impostor fue atrapado."):(lang==="en"?"The impostor escaped.":"El impostor escapó.");
+  document.getElementById("r-sub").textContent=caught?(lang==="en"?"Citizens win this round.":"Los ciudadanos ganan."):(lang==="en"?"Impostors win this round.":"Los impostores ganan.");
+  document.getElementById("r-imp-lbl").textContent=lang==="en"?`Impostor${imp.size>1?"s":""}`:`Impostor${imp.size>1?"es":""}`;
+  document.getElementById("r-imp-tags").innerHTML=[...imp].map(n=>`<div class="imp-tag">${n}</div>`).join("");
+  document.getElementById("r-word-lbl").textContent=lang==="en"?"The word was":"La palabra era";
+  document.getElementById("r-word").textContent=wO.w;
+  document.getElementById("r-brand").textContent=lang==="en"
+    ?"This round was played over All Of It — four countries, one cup. Whoever was pretending now knows what real harmony tastes like."
+    :"Esta ronda se jugó con All Of It — cuatro países, una taza. Quien estaba fingiendo ahora sabe a qué sabe la verdadera armonía.";
+  document.getElementById("btn-again").textContent=lang==="en"?"Play again":"Jugar de nuevo";
+  document.getElementById("btn-rhome").textContent=lang==="en"?"← Setup":"← Inicio";
+  show("s-result");
+}
+
+/* ══════════ NAV ══════════ */
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function playAgain(){goOrder()}
+
+/* ══════════ INIT ══════════ */
+checkIfVotePage(); // runs first — if it's a QR vote link, takes over completely
+updateCatRow();
+updateUI();
+</script>
+</body>
+</html>
